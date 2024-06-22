@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 @Component
 @RequiredArgsConstructor
-public class UsuarioComponent {
+public class ServiceSelector {
 
     private final CandidatoService candidatoService;
     private final AnalistaService analistaService;

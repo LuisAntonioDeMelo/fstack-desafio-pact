@@ -1,1 +1,154 @@
-<p>registrar works!</p>
+<div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+  <div
+    class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1"
+  >
+    <div class="lg:w-2 xl:w-7/12 p-8 p-2 mt-5">
+      <div></div>
+      <div class="mt-6 flex flex-col items-center">
+        <h1 class="text-2xl xl:text-3xl font-extrabold text-blue-600">
+          Dev jobs
+        </h1>
+        <div class="w-full flex-1 mt-2 p-1">
+          <div class="my-12 border-b text-center">
+            <div
+              class="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2"
+            >
+              Cadastro de usuarios
+            </div>
+          </div>
+          <!-- 1 -->
+          <mat-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup" class="w-full">
+                <ng-template matStepLabel
+                  >Insira seus dados de login</ng-template
+                >
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>Email</mat-label>
+                  <input
+                    matInput
+                    placeholder="email@example.com"
+                    formControlName="email"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>Senha</mat-label>
+                  <input
+                    matInput
+                    type="password"
+                    formControlName="senha"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>Confirme a senha</mat-label>
+                  <input
+                    matInput
+                    type="password"
+                    formControlName="confirmaSenha"
+                    required
+                  />
+                </mat-form-field>
+                <p>
+                  <mat-button-toggle-group
+                    formControlName="role"
+                    aria-label="Font Style"
+                  >
+                    <mat-button-toggle value="CANDIDATO"
+                      >Candidato</mat-button-toggle
+                    >
+                    <mat-button-toggle value="ANALISTA_RH"
+                      >Admin</mat-button-toggle
+                    >
+                  </mat-button-toggle-group>
+                </p>
+                <div>
+                  <button mat-button matStepperNext>Proximo</button>
+                </div>
+              </form>
+            </mat-step>
+
+            <!-- 2 -->
+            <mat-step
+              [stepControl]="secondFormGroup"
+              label="Insira seus dados pessoais"
+            >
+              <form [formGroup]="secondFormGroup">
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>Nome</mat-label>
+                  <input
+                    matInput
+                    formControlName="nome"
+                    placeholder=""
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>CPF</mat-label>
+                  <input
+                    matInput
+                    formControlName="cpf"
+                    placeholder=""
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>Telefone</mat-label>
+                  <input
+                    matInput
+                    formControlName="telefone"
+                    placeholder="(99)9 9999-9999"
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-form-field class="w-full px-20 py-1 rounded-lg">
+                  <mat-label>Endereço </mat-label>
+                  <input
+                    matInput
+                    formControlName="endereco"
+                    placeholder="Ex. 1 Main St, New York, NY"
+                    required
+                  />
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Voltar</button>
+                  <button mat-button matStepperNext>Proximo</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Finalizar</ng-template>
+              <p>Obrigado por cadastrar</p>
+              <div>
+                <button mat-button matStepperPrevious>Voltar</button>
+                <button mat-button (click)="stepper.reset()">Resetar</button>
+              </div>
+              <div class="mx-auto max-w-xs">
+                <button
+                  class="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  (click)="registrar()"
+                >
+                  <svg
+                    class="w-6 h-6 -ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <path d="M20 8v6M23 11h-6" />
+                  </svg>
+                  <span class="ml-3">Registar</span>
+                </button>
+              </div>
+            </mat-step>
+          </mat-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

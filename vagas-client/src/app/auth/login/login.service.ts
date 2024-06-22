@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Login } from './Login';
+import { Login, Token } from '../model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,9 @@ export class LoginService {
 
   constructor(public http: HttpClient) {}
 
-  logar(login: Login): Observable<string> {
-    return this.http.post<string>(this.$api, login, {
-      responseType: 'text' as 'json',
+  logar(login: Login): Observable<Token> {
+    return this.http.post<Token>(this.$api, login, {
+      responseType: 'json',
     });
   }
 

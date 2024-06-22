@@ -39,10 +39,13 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/vagas").hasRole("ANALISTA_RH")
+                        .requestMatchers(HttpMethod.POST, "/usuarios/criar").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/vagas")
+                        .hasRole("ANALISTA_RH")
                         .anyRequest()
                         .authenticated()
                 )
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

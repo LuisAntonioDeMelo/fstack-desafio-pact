@@ -9,4 +9,5 @@ public interface IUsuarioService {
     void criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user);
     void deletarUsuario(CriarUsuarioRequest criarUsuarioRequest);
 
+
 }

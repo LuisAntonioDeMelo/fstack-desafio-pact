@@ -1,36 +1,36 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
-import { Login } from './Login';
+import { Login, Token } from '../model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  login: Login;
+  login: Login = new Login();
 
   constructor(public loginService: LoginService, public router: Router) {
-    this.login = new Login();
     this.loginService.removeToken();
   }
 
   logar() {
     this.loginService.logar(this.login).subscribe({
-      next: (token) => {
-        if (token) {
-          this.loginService.setToken(token);
-          this.router.navigate(['/admin']);
-          console.log(token);
+      next: (res: Token) => {
+        if (res) {
+          console.log(res.token);
+          this.loginService.setToken(res.token);
+          this.router.navigate(['/dashboard']);
         } else {
           alert('usuario e senha incorretos');
         }
       },
-      error: (erro) => {
-        alert('deu erro');
+      error: (error) => {
+        alert(error.error);
       },
     });
   }

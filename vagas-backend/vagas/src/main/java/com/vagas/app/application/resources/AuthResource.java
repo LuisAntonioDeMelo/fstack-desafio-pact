@@ -39,7 +39,7 @@ public class AuthResource {
         try {
             User user = service.criarUser(register);
             URI headerLocation = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .query("user={user}")
+                    .query("user={user_id}")
                     .buildAndExpand(user.getId())
                     .toUri();
             return ResponseEntity.created(headerLocation).build();

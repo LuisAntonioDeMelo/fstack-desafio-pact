@@ -49,7 +49,7 @@ public class User implements UserDetails {
 
     public static User getUser(Register data, String encryptedPass) {
         return User.builder()
-                .login(data.login())
+                .login(data.username())
                 .role(data.role())
                 .password(encryptedPass)
                 .build();
