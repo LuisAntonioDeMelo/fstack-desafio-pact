@@ -20,7 +20,7 @@ public class CandidatoService implements IUsuarioService {
 
     @Override
     @Transactional
-    public void criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user) {
+    public User criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user) {
         if(user.isPresent()) {
             Pessoa pessoa =  user.get().getPessoa();
             Candidato candidato = new Candidato();
@@ -28,7 +28,7 @@ public class CandidatoService implements IUsuarioService {
             candidato.setPessoa(pessoa);
             candidatoRepository.save(candidato);
         }
-
+        return user.get();
     }
 
     @Override

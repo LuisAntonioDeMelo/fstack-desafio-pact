@@ -20,11 +20,12 @@ public class AnalistaService implements IUsuarioService {
 
     @Override
     @Transactional
-    public void criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user) {
+    public User criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user) {
         Pessoa pessoa = new Pessoa();
         var an = new AnalistaRH();
         an.setPessoa(pessoa);
         analistaRHRepository.save(an);
+        return user.get();
     }
 
     @Override
