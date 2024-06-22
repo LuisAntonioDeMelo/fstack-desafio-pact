@@ -11,9 +11,20 @@ import java.util.Set;
 @Data
 public class Requisito {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String nome;
+
     private Prioridade prioridade;
 
-    @OneToOne(mappedBy = "vaga", cascade = CascadeType.ALL)
+
+    @ManyToOne
+    @JoinColumn(name = "vaga_id")
     private Vaga vaga;
+
+    @ManyToOne
+    @JoinColumn(name = "candidato_id")
+    private Candidato candidato;
 }

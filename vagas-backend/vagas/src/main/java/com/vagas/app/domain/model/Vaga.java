@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity()
-@Table(name = "TB_VAGA")
+@Entity
+@Table(name = "tb_vaga")
 @NoArgsConstructor
 @Data
 public class Vaga {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "vaga_id")
     private UUID id;
 
@@ -30,21 +30,21 @@ public class Vaga {
 
     private LocalDate dataCriacao;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Prioridade prioridade;
 
     private LocalDate dataVencimento;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "tb_vaga_canditado",
-            joinColumns = @JoinColumn(name = "vaga_id"),
-            inverseJoinColumns = @JoinColumn(name = "cadidato_id")
-    )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
     private Set<Candidato> cadidatos;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "tb_vaga_analista",
+            name = "tb_vaga_analista_rh",
             joinColumns = @JoinColumn(name = "vaga_id"),
             inverseJoinColumns = @JoinColumn(name = "analista_id")
     )

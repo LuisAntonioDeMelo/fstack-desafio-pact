@@ -1,6 +1,8 @@
 package com.vagas.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vagas.app.domain.model.AnalistaRH;
+import com.vagas.app.domain.model.Candidato;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,12 +11,12 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode
+@Table(name = "tb_pessoa")
 public class Pessoa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "pessoa_id")
     private UUID id;
 
@@ -28,8 +30,10 @@ public class Pessoa {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void criarPessoaRole(Role role) {
-        this.user.setRole(role);
-    }
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private Candidato candidato;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private AnalistaRH analista;
 
 }

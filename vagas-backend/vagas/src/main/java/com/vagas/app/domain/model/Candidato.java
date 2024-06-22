@@ -15,28 +15,34 @@ import java.util.Set;
 import java.util.UUID;
 
 
-@Entity()
-@Table(name = "TB_CANDIDATO")
+@Entity
+@Table(name = "tb_candidato")
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Candidato extends Pessoa {
+public class Candidato  {
 
-    @Column(name = "codigo_cadidato")
-    private UUID codigo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "candidato_id")
+    private UUID id;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
 
     private LocalDate dataCadastro;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "tb_candidato_vaga",
+            joinColumns = @JoinColumn(name = "candidato_id"),
+            inverseJoinColumns = @JoinColumn(name = "vaga_id")
+    )
     private Set<Vaga> vagas;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
     private Set<Requisito> requisitos = new HashSet<>();
 
-    @Override
-    public void criarPessoaRole(Role role) {
-        super.criarPessoaRole(Role.CANDIDATO);
-    }
 }

@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 
     private final SecurityFilter securityFilter;
     @Bean
-    public SecurityFilterChain securityFilter(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize

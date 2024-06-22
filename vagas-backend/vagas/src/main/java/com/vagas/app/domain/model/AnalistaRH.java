@@ -13,21 +13,26 @@ import java.util.UUID;
 
 
 @Entity()
-@Table(name = "TB_ANALISTA_RH")
+@Table(name = "tb_analista_rh")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class AnalistaRH extends Pessoa {
+public class AnalistaRH {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "analista_id")
+    private UUID id;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
 
     private String cargo;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "analistas", fetch = FetchType.LAZY)
     private Set<Vaga> vagas;
 
-    @Override
-    public void criarPessoaRole(Role role) {
-        super.criarPessoaRole(Role.ANALISTA_RH);
-    }
 
 }

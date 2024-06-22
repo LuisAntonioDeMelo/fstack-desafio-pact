@@ -1,6 +1,5 @@
-package com.vagas.app.application.service;
+package com.vagas.app.application.services;
 
-import com.vagas.app.domain.Pessoa;
 import com.vagas.app.domain.model.Candidato;
 import com.vagas.app.infra.repository.CandidatoRepository;
 import lombok.RequiredArgsConstructor;

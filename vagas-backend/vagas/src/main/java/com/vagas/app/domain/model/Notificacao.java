@@ -3,16 +3,17 @@ package com.vagas.app.domain.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "TB_NOTIFICACAO")
+@Table(name = "tb_notificacao")
 public class Notificacao {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigoNotificacao;
     private String mensagem;
     //usuario x canditatou a vaga y
     //vaga foi fechada
     //vaga foi descontinuada
-    @OneToOne(mappedBy = "vaga", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "vaga_id")
     private Vaga vaga;
 }
 

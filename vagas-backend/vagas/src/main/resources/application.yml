@@ -1,23 +1,36 @@
 spring:
   application:
     name: "vagas"
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/seu_banco_de_dados
-    username: seu_usuario
-    password: sua_senha
+    url: jdbc:postgresql://localhost:5446/postgres
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
+server:
+  port: 8081
+
+api:
   security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${ISSUER_URL:http://localhost:9999/realms/test-realm}
+    token:
+      secret: vbGbyCB2MDWPM7HNjK4UaRHaeHPSUBSu
+#Host: postgres
+#Port: 5432
+#db: postgres
+#user: postgres
+#pasword: postgres
+
+#sem keycloak
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${ISSUER_URL:http://localhost:9999/realms/test-realm}
