@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,6 +24,10 @@ public class AnalistaRH {
     @Column(name = "analista_id")
     private UUID id;
 
+    private String departamento;
+
+    private LocalDate dataCadastro;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne
     @JoinColumn(name = "pessoa_id")
@@ -34,5 +39,8 @@ public class AnalistaRH {
     @ManyToMany(mappedBy = "analistas", fetch = FetchType.LAZY)
     private Set<Vaga> vagas;
 
-
+    @PrePersist
+    private void prePersist(){
+        this.dataCadastro = LocalDate.now();
+    }
 }

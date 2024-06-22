@@ -1,4 +1,4 @@
-package com.vagas.app.infra.config;
+package com.vagas.app.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -30,7 +30,7 @@ public class TokenService {
         }
     }
 
-    public String generateToken(User user){
+    public Token generateToken(User user){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
@@ -38,7 +38,8 @@ public class TokenService {
                     .withSubject(user.getLogin())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
-            return token;
+            return new Token(
+                    token,genExpirationDate().atZone(ZoneOffset.UTC).getNano(),"HMAC256");
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);
         }

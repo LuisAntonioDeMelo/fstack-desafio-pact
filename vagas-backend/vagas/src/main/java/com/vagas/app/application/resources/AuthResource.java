@@ -3,44 +3,48 @@ package com.vagas.app.application.resources;
 import com.vagas.app.application.resources.dto.AuthenticationRequest;
 import com.vagas.app.application.resources.dto.LoginResponse;
 import com.vagas.app.application.resources.dto.Register;
+import com.vagas.app.application.services.UserService;
+import com.vagas.app.application.services.erros.RegisterException;
+import com.vagas.app.config.Token;
 import com.vagas.app.domain.User;
-import com.vagas.app.infra.config.TokenService;
-import com.vagas.app.infra.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("auth")
 @RequiredArgsConstructor
 public class AuthResource {
 
-    private final TokenService tokenService;
-    private final UserRepository userRepository;
-    private final AuthenticationManager authenticationManager;
+    private final UserService service;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequest data){
-        UsernamePasswordAuthenticationToken usernamePassword =
-                new UsernamePasswordAuthenticationToken(data.login(), data.password());
-        Authentication auth = this.authenticationManager.authenticate(usernamePassword);
-        String token = tokenService.generateToken((User) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponse(token));
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest data) {
+        try {
+            Token token = service.obterToken(data);
+            return ResponseEntity.ok(new LoginResponse(token));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Register data){
-        if(this.userRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = User.getUser(data, encryptedPassword);
-        this.userRepository.save(newUser);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> register(@RequestBody Register register) {
+        try {
+            User user = service.criarUser(register);
+            URI headerLocation = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .query("user={user}")
+                    .buildAndExpand(user.getId())
+                    .toUri();
+            return ResponseEntity.created(headerLocation).build();
+        } catch (RegisterException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 }

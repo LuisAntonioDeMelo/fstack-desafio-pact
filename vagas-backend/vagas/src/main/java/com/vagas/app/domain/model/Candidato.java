@@ -44,5 +44,9 @@ public class Candidato  {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)
     private Set<Requisito> requisitos = new HashSet<>();
+    @PrePersist
+    private void prePersist(){
+        this.dataCadastro = LocalDate.now();
+    }
 
 }
