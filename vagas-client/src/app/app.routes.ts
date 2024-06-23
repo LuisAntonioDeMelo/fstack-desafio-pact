@@ -7,15 +7,18 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CandidatosComponent } from './dashboard/candidatos/candidatos.component';
 import { VagasComponent } from './dashboard/vagas/vagas.component';
 import { DashboardContentComponent } from './dashboard/dashboard-content/dashboard-content.component';
+import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarComponent },
 
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'dashboard-content', pathMatch: 'full' },
       { path: 'dashboard-content', component: DashboardContentComponent },

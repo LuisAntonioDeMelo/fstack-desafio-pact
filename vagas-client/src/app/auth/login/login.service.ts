@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Login, Token } from '../model';
+import { Login, Token, Usuario } from '../model';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +12,43 @@ export class LoginService {
 
   constructor(public http: HttpClient) {}
 
-  logar(login: Login): Observable<Token> {
-    return this.http.post<Token>(this.$api, login, {
-      responseType: 'json',
+  logar(login: Login): Observable<string> {
+    return this.http.post<string>(this.$api, login, {
+      responseType: 'text' as 'json',
     });
   }
 
+  obterUsuario() {
+    return this.jwtDecodeToken() as Usuario;
+  }
+
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    const data = JSON.parse(token);
+    localStorage.setItem('token', data.token);
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
   }
 
   removeToken() {
     localStorage.removeItem('token');
+  }
+
+  hasPermission(role: string) {
+    let usuario = this.jwtDecodeToken() as Usuario;
+    return usuario.role === role ? true : false;
+  }
+
+  isLoggedIn(): boolean {
+    return this.getToken() !== null;
+  }
+
+  jwtDecodeToken(): any {
+    let token = this.getToken();
+    if (token) {
+      return jwtDecode<JwtPayload>(token);
+    }
+    return '';
   }
 }

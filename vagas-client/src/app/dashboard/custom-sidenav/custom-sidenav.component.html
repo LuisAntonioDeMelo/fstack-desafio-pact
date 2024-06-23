@@ -21,4 +21,7 @@
       {{ item.label }}
     </span>
   </a>
+  @if (loginService.hasPermission('candidato')) {
+  <a mat-list-item> config</a>
+  }
 </mat-nav-list>

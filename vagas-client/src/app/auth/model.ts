@@ -3,13 +3,22 @@ export class Login {
   password!: string;
 }
 
-export interface Usuario {
-  username: string | null | undefined;
-  password: string | null | undefined;
-  role: string | null | undefined;
+export class Usuario {
+  id!: any;
+  username!: any;
+  password!: any;
+  role!: any;
+
+  constructor(id: any, username: any, password: any, role: any) {
+    this.id = id;
+    this.username = username;
+    this.password = password;
+    this.role = role;
+  }
 }
 
-export class Pessoa {
+export class DadosUsuario {
+  id!: string;
   nome!: string;
   cpf!: string;
   email!: string;

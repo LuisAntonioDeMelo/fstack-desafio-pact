@@ -20,14 +20,14 @@ export class LoginComponent {
 
   logar() {
     this.loginService.logar(this.login).subscribe({
-      next: (res: Token) => {
-        if (res) {
-          console.log(res.token);
-          this.loginService.setToken(res.token);
-          this.router.navigate(['/dashboard']);
+      next: (token) => {
+        if (token) {
+          this.loginService.setToken(token);
         } else {
           alert('usuario e senha incorretos');
         }
+
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         alert(error.error);

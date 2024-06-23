@@ -13,7 +13,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { LoginService } from '../login/login.service';
 import { registrarService } from './registrar.service';
 import { Router } from '@angular/router';
-import { Login, Token, Usuario } from '../model';
+import { Login, DadosUsuario, Token, Usuario } from '../model';
 
 @Component({
   selector: 'app-registrar',
@@ -53,27 +53,37 @@ export class RegistrarComponent {
     private router: Router
   ) {}
 
-  registrar() {
+  async registrar() {
     if (this.firstFormGroup.valid) {
       const { email, senha, role } = this.firstFormGroup.value;
-      const usuarioModel: Usuario = {
-        username: email,
-        password: senha,
-        role: role,
-      };
-      this.save(usuarioModel);
+      const usuario = new Usuario(null, email, senha, role);
+      const dadosUsuario = new DadosUsuario();
+      await this.save(usuario);
+      await this.registrarPessoa(dadosUsuario);
     }
   }
 
-  private save(usuario: Usuario) {
+  private async save(usuario: Usuario) {
     this.registrarService.registrar(usuario).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.router.navigate(['/dashboard']);
+      next: (response) => {
+        const headers = response.headers;
+        console.log(response);
+        console.log(headers);
+        this.loginService.setToken(response.body);
       },
       error: (error) => {
         console.log(error);
       },
     });
+  }
+
+  private async registrarPessoa(dadosUsuario: DadosUsuario) {
+    this.registrarService.registrarDadosUsuario(dadosUsuario).subscribe({
+      next: (res) => {},
+      error: (error) => {
+        alert('erro ao salvar');
+      },
+    });
+    this.router.navigate(['/dashboard']);
   }
 }
