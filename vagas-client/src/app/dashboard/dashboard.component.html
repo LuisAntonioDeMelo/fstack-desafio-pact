@@ -1,3 +1,21 @@
-menu >>> vagas >>>
+<mat-toolbar class="mat-elevation-z3">
+  <button mat-icon-button (click)="collapsed.set(!collapsed())">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="sidenaWidth()">
+    <app-custom-sidenav [collapsed]="collapsed()" />
+  </mat-sidenav>
+  <mat-sidenav-content
+    class="content bg-gray-100"
+    [style.margin-left]="sidenaWidth()"
+  >
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- menu >>> vagas >>>
 <app-admin></app-admin>
-<app-candidatos></app-candidatos>
+<app-candidatos></app-candidatos> -->

@@ -1,11 +1,8 @@
 package com.vagas.app.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.vagas.app.domain.Pessoa;
-import com.vagas.app.domain.Role;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;

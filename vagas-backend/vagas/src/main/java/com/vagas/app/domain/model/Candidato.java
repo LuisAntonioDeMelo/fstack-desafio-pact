@@ -1,14 +1,11 @@
 package com.vagas.app.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.vagas.app.domain.Pessoa;
-import com.vagas.app.domain.Role;
-import com.vagas.app.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +29,8 @@ public class Candidato  {
     private Pessoa pessoa;
 
     private LocalDate dataCadastro;
+
+    private BigDecimal pretensaoSalarial;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

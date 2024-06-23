@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IUsuarioService {
     User criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user);
-    void deletarUsuario(CriarUsuarioRequest criarUsuarioRequest);
+    void deletarUsuario(String  userId);
 
 
 }

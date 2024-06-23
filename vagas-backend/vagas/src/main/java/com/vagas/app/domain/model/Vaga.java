@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,10 @@ public class Vaga {
     private String descricao;
 
     private LocalDate dataCriacao;
+
+    private String localizacao;
+
+    private BigDecimal salario;
 
     @Enumerated(EnumType.STRING)
     private Status status;

@@ -1,0 +1,41 @@
+:host * {
+    transition: all 300ms ease-in-out;
+}
+
+.sidenav-header {
+    padding: 24px;
+    text-align: center;
+
+    >img {
+        border-radius: 100%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .header-text {
+        >h2 {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        >p {
+            margin: 0;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.hide-header {
+    opacity: 0;
+    height: 0px;
+}
+
+.selected-menu-item {
+    border-left: 5px solid;
+    border-left-color: indigo;
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+    border-radius: 0;
+}

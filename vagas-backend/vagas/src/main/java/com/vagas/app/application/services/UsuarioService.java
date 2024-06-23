@@ -22,7 +22,7 @@ public class UsuarioService {
             var user = userRepository.findByLogin(criarUsuarioRequest.email());
              return service.criarUsuario(criarUsuarioRequest, user);
         } else {
-            throw new IllegalArgumentException("Serviço não encontrado para o papel: " + role);
+            throw new IllegalArgumentException("Serviço não encontrado para a: " + role);
         }
     }
 

@@ -2,7 +2,7 @@ package com.vagas.app.application.services;
 
 import com.vagas.app.application.resources.dto.CriarUsuarioRequest;
 import com.vagas.app.application.services.patterns.IUsuarioService;
-import com.vagas.app.domain.Pessoa;
+import com.vagas.app.domain.model.Pessoa;
 import com.vagas.app.domain.User;
 import com.vagas.app.domain.model.AnalistaRH;
 import com.vagas.app.infra.repository.AnalistaRHRepository;
@@ -29,7 +29,7 @@ public class AnalistaService implements IUsuarioService {
     }
 
     @Override
-    public void deletarUsuario(CriarUsuarioRequest criarUsuarioRequest) {
+    public void deletarUsuario(String  userId) {
 
     }
 }

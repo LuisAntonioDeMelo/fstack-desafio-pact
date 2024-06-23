@@ -1,6 +1,7 @@
-package com.vagas.app.domain;
+package com.vagas.app.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vagas.app.domain.User;
 import com.vagas.app.domain.model.AnalistaRH;
 import com.vagas.app.domain.model.Candidato;
 import jakarta.persistence.*;
