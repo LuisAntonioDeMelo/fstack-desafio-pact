@@ -1,5 +1,5 @@
 package com.vagas.app.domain.model;
 
 public enum Status {
-    ATIVA,PENDENTE, EM_PROCESSO, INATIVA, FECHADA;
+    ABERTA,FECHADA, EM_PROCESSO, CRIADA, CANCELADA;
 }

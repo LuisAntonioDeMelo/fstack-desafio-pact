@@ -12,11 +12,12 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode
 @Table(name = "tb_pessoa")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pessoa {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "pessoa_id")
     private UUID id;

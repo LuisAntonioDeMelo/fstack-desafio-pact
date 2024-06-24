@@ -2,6 +2,8 @@ package com.vagas.app.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,8 +16,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tb_vaga")
-@NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Vaga {
 
     @Id
@@ -48,7 +52,7 @@ public class Vaga {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "vagas", fetch = FetchType.LAZY)
-    private Set<Candidato> cadidatos;
+    private Set<Candidato> candidatos;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -61,9 +65,5 @@ public class Vaga {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY)
     private List<Requisito> requisitos;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY)
-    private List<Notificacao> notificacoes;
 
 }

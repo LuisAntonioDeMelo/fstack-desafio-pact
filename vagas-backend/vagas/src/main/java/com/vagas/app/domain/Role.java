@@ -1,7 +1,6 @@
 package com.vagas.app.domain;
 
 public enum Role {
-    ADMIN("admin"),
     ANALISTA_RH("analista"),
     CANDIDATO("candidato");
 
