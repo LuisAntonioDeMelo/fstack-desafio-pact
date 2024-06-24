@@ -11,7 +11,11 @@
 
 <mat-sidenav-container>
   <mat-sidenav opened mode="side" [style.width]="sidenaWidth()">
-    <app-custom-sidenav [collapsed]="collapsed()" />
+    <app-custom-sidenav
+      [nomeUsuario]="nomeUsuario"
+      [role]="usuarioRole"
+      [collapsed]="collapsed()"
+    />
   </mat-sidenav>
   <mat-sidenav-content
     class="content bg-gray-100"

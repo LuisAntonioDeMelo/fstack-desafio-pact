@@ -1,1 +1,7 @@
-<p>candidatos works!</p>
+@if(loginService.hasPermission('analista')){
+
+<p>candidatos cadastrados na vagas</p>
+} @if(loginService.hasPermission('candidato')){
+
+<p>vagas</p>
+}

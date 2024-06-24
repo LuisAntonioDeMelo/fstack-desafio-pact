@@ -5,7 +5,6 @@ import com.vagas.app.application.resources.dto.LoginResponse;
 import com.vagas.app.application.resources.dto.Register;
 import com.vagas.app.application.services.UserService;
 import com.vagas.app.application.services.erros.RegisterException;
-import com.vagas.app.config.Token;
 import com.vagas.app.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class AuthResource {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest data) {
         try {
-            Token token = service.obterToken(data);
+            String token = service.obterToken(data);
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
@@ -38,11 +37,12 @@ public class AuthResource {
     public ResponseEntity<?> register(@RequestBody Register register) {
         try {
             User user = service.criarUser(register);
+            String token = service.obterToken(new AuthenticationRequest(register.username(), register.password()));
             URI headerLocation = ServletUriComponentsBuilder.fromCurrentRequest()
                     .query("user={user_id}")
                     .buildAndExpand(user.getId())
                     .toUri();
-            return ResponseEntity.created(headerLocation).build();
+            return ResponseEntity.created(headerLocation).body(new LoginResponse(token));
         } catch (RegisterException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }

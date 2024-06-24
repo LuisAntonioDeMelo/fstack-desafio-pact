@@ -30,16 +30,16 @@ public class TokenService {
         }
     }
 
-    public Token generateToken(User user){
+    public String generateToken(User user){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create()
+            return  JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(user.getLogin())
+                    .withClaim("id",user.getId())
+                    .withClaim("role",user.getRole().getRole())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
-            return new Token(
-                    token,genExpirationDate().atZone(ZoneOffset.UTC).getNano(),"HMAC256");
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);
         }

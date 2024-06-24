@@ -6,10 +6,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   let loginService: LoginService = inject(LoginService);
   let router: Router = inject(Router);
 
-  if (!loginService.isLoggedIn()) {
-    alert('Nenhum usuario logado!');
-    router.navigate(['']);
-  }
+  //   if (state.url !== '/registrar' && !loginService.isLoggedIn()) {
+  //     alert('Nenhum usuario logado!');
+  //     router.navigate(['']);
+  //   }
 
   if (
     loginService.hasPermission('candidato') &&

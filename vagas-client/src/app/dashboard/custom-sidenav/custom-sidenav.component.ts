@@ -25,6 +25,9 @@ export class CustomSidenavComponent {
   }
   loginService = inject(LoginService);
 
+  @Input() nomeUsuario: string = '';
+  @Input() role: string = '';
+
   menuItems = this.loginService.hasPermission('analista')
     ? signal<MenuItem[]>([
         {

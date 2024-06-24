@@ -44,6 +44,8 @@ export class DashboardComponent implements OnInit {
 
   sidenaWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
 
+  nomeUsuario: string = '';
+  usuarioRole: string = '';
   ngOnInit(): void {
     this.obterUsuario();
   }
@@ -58,6 +60,8 @@ export class DashboardComponent implements OnInit {
     this.usuarioService.obterUsuario({ id: id }).subscribe({
       next: (res) => {
         console.log(res);
+        this.nomeUsuario = res.pessoa.nome;
+        this.usuarioRole = res.role;
       },
       error: (error) => {},
     });

@@ -41,8 +41,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios/criar").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios/listAll").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/vagas")
-                        .hasRole("ANALISTA_RH")
                         .anyRequest()
                         .authenticated()
                 )

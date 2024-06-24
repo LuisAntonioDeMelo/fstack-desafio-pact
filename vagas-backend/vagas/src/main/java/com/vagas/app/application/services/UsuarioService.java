@@ -15,12 +15,12 @@ public class UsuarioService {
     private final ServiceSelector serviceSelector;
     private final UserRepository userRepository;
 
-    public User criarUsuario(CriarUsuarioRequest criarUsuarioRequest) {
+    public void criarUsuario(CriarUsuarioRequest criarUsuarioRequest) {
         String role = criarUsuarioRequest.role().toLowerCase();
         IUsuarioService service = serviceSelector.usuarioServices().get(role);
         if (service != null) {
             var user = userRepository.findByLogin(criarUsuarioRequest.email());
-             return service.criarUsuario(criarUsuarioRequest, user);
+            service.criarUsuario(criarUsuarioRequest, user);
         } else {
             throw new IllegalArgumentException("Serviço não encontrado para a: " + role);
         }

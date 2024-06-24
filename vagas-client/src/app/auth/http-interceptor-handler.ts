@@ -8,7 +8,10 @@ export const httpInteceptorHandler: HttpInterceptorFn = (request, next) => {
 
   let token = localStorage.getItem('token');
 
-  if (token && !router.url.includes('/login')) {
+  if (
+    token &&
+    (!router.url.includes('/login') || !router.url.includes('/registrar'))
+  ) {
     request = request.clone({
       setHeaders: { Authorization: 'Bearer ' + token },
     });
@@ -17,11 +20,8 @@ export const httpInteceptorHandler: HttpInterceptorFn = (request, next) => {
   return next(request).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
-        if (err.status === 403) {
-          alert('403 - tratar aqui');
-          router.navigate(['/login']);
-        } else if (err.status === 401) {
-          alert('401 - tratar aqui');
+        if (err.status === 403 || err.status === 401) {
+          alert('Usuario Não está mais logado');
           router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);

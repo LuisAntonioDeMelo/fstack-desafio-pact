@@ -30,7 +30,7 @@ public class AnalistaRH {
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
-    private String cargo;
+    private String empresa;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "analistas", fetch = FetchType.LAZY)

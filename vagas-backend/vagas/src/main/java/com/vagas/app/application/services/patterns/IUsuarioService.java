@@ -6,7 +6,7 @@ import com.vagas.app.domain.User;
 import java.util.Optional;
 
 public interface IUsuarioService {
-    User criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user);
+    void criarUsuario(CriarUsuarioRequest criarUsuarioRequest, Optional<User> user);
     void deletarUsuario(String  userId);
 
 

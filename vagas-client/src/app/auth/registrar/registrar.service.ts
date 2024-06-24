@@ -6,20 +6,20 @@ import { DadosUsuario, Usuario } from '../model';
 @Injectable({
   providedIn: 'root',
 })
-export class registrarService {
-  private $registra = 'http://localhost:8081/auth/register';
-  private $registraDados = 'http://localhost:8081/auth/register/usuarios/criar';
+export class RegistrarService {
+  private $register = 'http://localhost:8081/auth/register';
+  private $api = 'http://localhost:8081/usuarios';
 
   constructor(public http: HttpClient) {}
 
-  registrar(data: any): Observable<HttpResponse<any>> {
-    return this.http.post<any>(`${this.$registra}/register`, data, {
-      observe: 'response',
+  registrarAuth(data: any): Observable<string> {
+    return this.http.post<string>(this.$register, data, {
+      responseType: 'text' as 'json',
     });
   }
 
   registrarDadosUsuario(dadosUsuario: DadosUsuario) {
-    return this.http.post<DadosUsuario>(this.$registraDados, dadosUsuario, {
+    return this.http.post<DadosUsuario>(`${this.$api}/criar`, dadosUsuario, {
       responseType: 'json',
     });
   }

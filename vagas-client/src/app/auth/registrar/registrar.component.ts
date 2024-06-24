@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { LoginService } from '../login/login.service';
-import { registrarService } from './registrar.service';
+import { RegistrarService } from './registrar.service';
 import { Router } from '@angular/router';
 import { Login, DadosUsuario, Token, Usuario } from '../model';
 
@@ -45,43 +45,64 @@ export class RegistrarComponent {
   });
   isLinear = false;
   showField = false;
+  tokenUser: any;
 
   constructor(
     private _formBuilder: FormBuilder,
     private loginService: LoginService,
-    private registrarService: registrarService,
+    private registrarService: RegistrarService,
     private router: Router
   ) {}
 
   async registrar() {
-    if (this.firstFormGroup.valid) {
+    if (this.firstFormGroup.valid || this.secondFormGroup.valid) {
       const { email, senha, role } = this.firstFormGroup.value;
       const usuario = new Usuario(null, email, senha, role);
-      const dadosUsuario = new DadosUsuario();
-      await this.save(usuario);
-      await this.registrarPessoa(dadosUsuario);
+
+      try {
+        const token = await this.registrarAuth(usuario);
+        this.loginService.setToken(token);
+        this.tokenUser = this.loginService.obterUsuario();
+
+        const { id, role } = this.tokenUser;
+        const { nome, endereco, telefone, cpf } = this.secondFormGroup.value;
+        const dadosUsuario = {
+          id,
+          nome,
+          email,
+          endereco,
+          telefone,
+          cpf,
+          role,
+        } as DadosUsuario;
+
+        this.registrarDadosUsuario(dadosUsuario);
+      } catch (erro) {
+        alert('erro ao registrar!' + erro);
+        throw erro;
+      }
+    } else {
+      alert('Preencha os campos antes de se registrar!');
     }
   }
 
-  private async save(usuario: Usuario) {
-    this.registrarService.registrar(usuario).subscribe({
-      next: (response) => {
-        const headers = response.headers;
-        console.log(response);
-        console.log(headers);
-        this.loginService.setToken(response.body);
-      },
-      error: (error) => {
-        console.log(error);
-      },
+  registrarAuth(usuario: Usuario): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.registrarService.registrarAuth(usuario).subscribe({
+        next: (token) => resolve(token),
+        error: (error) => reject(error),
+      });
     });
   }
 
-  private async registrarPessoa(dadosUsuario: DadosUsuario) {
+  registrarDadosUsuario(dadosUsuario: DadosUsuario) {
+    console.log(dadosUsuario);
     this.registrarService.registrarDadosUsuario(dadosUsuario).subscribe({
-      next: (res) => {},
+      next: (res) => {
+        this.router.navigate(['/dashboard']);
+      },
       error: (error) => {
-        alert('erro ao salvar');
+        alert('error ao salvar:: ' + error.error);
       },
     });
     this.router.navigate(['/dashboard']);
