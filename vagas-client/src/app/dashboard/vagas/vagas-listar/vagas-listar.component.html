@@ -1,65 +1,105 @@
-<mat-card>
-  <mat-card-title>Listar Vagas de Emprego</mat-card-title>
-  <mat-card-content>
-    <table mat-table [dataSource]="vagas" class="mat-elevation-z8">
-      <!-- Código da Vaga Column -->
+<mat-card class="p-2 mat-elevation-z1">
+  <mat-card-title class="p-4 mt-2 text-indigo-500"
+    ><strong>Listar Vagas</strong></mat-card-title
+  >
+  <div>
+    <mat-card-content>
+      <form class="search-form" (ngSubmit)="onSearch()">
+        <mat-form-field class="full-width">
+          <mat-label>Pesquisa</mat-label>
+          <input
+            matInput
+            placeholder="Digite sua pesquisa"
+            [(ngModel)]="searchQuery"
+            name="searchQuery"
+          />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">
+          <span>Buscar</span>
+          <mat-icon>search</mat-icon>
+        </button>
+        <div class="buttons-container">
+          <button mat-button type="button" (click)="clearSearch()">
+            Limpar
+          </button>
+        </div>
+        <div>
+          <button mat-raised-button type="button" (click)="cadastrar()">
+            Novo +
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </div>
+
+  <mat-card-content class="p-5 mt-4">
+    <table mat-table [dataSource]="vagas" class="mat-elevation-z1">
       <ng-container matColumnDef="codigoVaga">
         <th mat-header-cell *matHeaderCellDef>Código</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.codigoVaga }}</td>
       </ng-container>
 
-      <!-- Título Column -->
       <ng-container matColumnDef="titulo">
         <th mat-header-cell *matHeaderCellDef>Título</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.titulo }}</td>
       </ng-container>
 
-      <!-- Descrição Column -->
       <ng-container matColumnDef="descricao">
         <th mat-header-cell *matHeaderCellDef>Descrição</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.descricao }}</td>
       </ng-container>
 
-      <!-- Data de Criação Column -->
       <ng-container matColumnDef="dataCriacao">
         <th mat-header-cell *matHeaderCellDef>Data de Criação</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.dataCriacao }}</td>
       </ng-container>
 
-      <!-- Localização Column -->
       <ng-container matColumnDef="localizacao">
         <th mat-header-cell *matHeaderCellDef>Localização</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.localizacao }}</td>
       </ng-container>
 
-      <!-- Salário Column -->
       <ng-container matColumnDef="salario">
         <th mat-header-cell *matHeaderCellDef>Salário</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.salario }}</td>
       </ng-container>
 
-      <!-- Status Column -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef>Status</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.status }}</td>
       </ng-container>
 
-      <!-- Prioridade Column -->
       <ng-container matColumnDef="prioridade">
         <th mat-header-cell *matHeaderCellDef>Prioridade</th>
         <td mat-cell *matCellDef="let vaga">{{ vaga.prioridade }}</td>
       </ng-container>
 
-      <!-- Data de Vencimento Column -->
       <ng-container matColumnDef="dataVencimento">
         <th mat-header-cell *matHeaderCellDef>Data de Vencimento</th>
         <td mat-cell *matCellDef="let vaga">
           {{ vaga.dataVencimento }}
         </td>
       </ng-container>
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" (click)="editar(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluir(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
   </mat-card-content>
 </mat-card>

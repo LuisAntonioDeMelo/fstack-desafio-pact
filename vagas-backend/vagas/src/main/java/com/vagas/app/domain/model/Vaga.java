@@ -41,6 +41,9 @@ public class Vaga {
     @Enumerated(EnumType.STRING)
     private Prioridade prioridade;
 
+    @Enumerated(EnumType.STRING)
+    private TipoVaga tipoVaga;
+
     private LocalDate dataVencimento;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

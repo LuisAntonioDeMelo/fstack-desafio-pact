@@ -8,6 +8,7 @@ import { CandidatosComponent } from './dashboard/candidatos/candidatos.component
 import { VagasComponent } from './dashboard/vagas/vagas.component';
 import { DashboardContentComponent } from './dashboard/dashboard-content/dashboard-content.component';
 import { authGuard } from './auth/auth.guard';
+import { VagasDetalheComponent } from './dashboard/vagas/vagas-detalhe/vagas-detalhe.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,7 +25,12 @@ export const routes: Routes = [
       { path: 'dashboard-content', component: DashboardContentComponent },
       { path: 'candidatos', component: CandidatosComponent },
       { path: 'admin', component: AdminComponent },
-      { path: 'vagas', component: VagasComponent },
+      {
+        path: 'vagas',
+        component: VagasComponent,
+      },
+      { path: 'vagas/cadastrar', component: VagasDetalheComponent },
+      { path: 'vagas/editar/:id', component: VagasDetalheComponent },
     ],
   },
 ];

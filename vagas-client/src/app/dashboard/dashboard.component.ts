@@ -11,6 +11,7 @@ import {
   MatSidenavContainer,
   MatSidenavContent,
 } from '@angular/material/sidenav';
+import { MatBadgeModule } from '@angular/material/badge';
 import { CustomSidenavComponent } from './custom-sidenav/custom-sidenav.component';
 import { LoginService } from '../auth/login/login.service';
 import { UsuarioService } from '../auth/usuario.service';
@@ -31,14 +32,16 @@ import { UsuarioService } from '../auth/usuario.service';
     MatSidenavContainer,
     MatSidenav,
     MatSidenavContent,
+    MatBadgeModule,
     CustomSidenavComponent,
   ],
 })
 export class DashboardComponent implements OnInit {
-  loginService = inject(LoginService);
-  router = inject(Router);
-
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    public loginService: LoginService
+  ) {}
 
   collapsed = signal(false);
 

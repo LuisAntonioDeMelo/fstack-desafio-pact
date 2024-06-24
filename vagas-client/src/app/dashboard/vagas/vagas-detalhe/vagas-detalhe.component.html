@@ -1,1 +1,66 @@
-<p>vagas-detalhe works!</p>
+<mat-card class="card-container">
+  <mat-card-title class="card-title">Cadastrar Vaga de Emprego</mat-card-title>
+  <mat-card-content>
+    <form class="form-container" (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width">
+        <mat-label>Título da Vaga</mat-label>
+        <input
+          matInput
+          placeholder="Ex: Desenvolvedor Front-end"
+          [(ngModel)]="vaga.titulo"
+          name="titulo"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Descrição</mat-label>
+        <textarea
+          matInput
+          placeholder="Descreva a vaga"
+          [(ngModel)]="vaga.descricao"
+          name="descricao"
+          required
+        ></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <mat-label>Localização</mat-label>
+        <input
+          matInput
+          placeholder="Ex: São Paulo"
+          [(ngModel)]="vaga.localizacao"
+          name="localizacao"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <mat-label>Salário</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Ex: 3000"
+          [(ngModel)]="vaga.salario"
+          name="salario"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <mat-label>Data de Início</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="vaga.dataInicio"
+          name="dataInicio"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Cadastrar</button>
+    </form>
+  </mat-card-content>
+</mat-card>
