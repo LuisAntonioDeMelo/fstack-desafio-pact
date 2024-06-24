@@ -2,31 +2,34 @@
   <mat-card-title class="p-4 mt-2 text-indigo-500"
     ><strong>Listar Vagas</strong></mat-card-title
   >
-  <div>
-    <mat-card-content>
-      <form class="search-form" (ngSubmit)="onSearch()">
-        <mat-form-field class="full-width">
-          <mat-label>Pesquisa</mat-label>
-          <input
-            matInput
-            placeholder="Digite sua pesquisa"
-            [(ngModel)]="searchQuery"
-            name="searchQuery"
-          />
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">
-          <span>Buscar</span>
-          <mat-icon>search</mat-icon>
-        </button>
-        <div class="buttons-container">
+  <div class="flex flex-1">
+    <mat-card-content class="flex-1">
+      <form (ngSubmit)="onSearch()">
+        <div class="flex items-center justify-between">
+          <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Pesquisa</mat-label>
+            <input
+              matInput
+              placeholder="Digite sua pesquisa"
+              [(ngModel)]="searchQuery"
+              name="searchQuery"
+            />
+          </mat-form-field>
+
+          <button mat-button color="primary" type="submit">
+            <span>Buscar</span>
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+
+        <div class="">
           <button mat-button type="button" (click)="clearSearch()">
             Limpar
           </button>
-        </div>
-        <div>
-          <button mat-raised-button type="button" (click)="cadastrar()">
-            Novo +
-          </button>
+
+          <div class="w-1/6">
+            <v-button (click)="cadastrar()" [any]="'Nova +'" />
+          </div>
         </div>
       </form>
     </mat-card-content>

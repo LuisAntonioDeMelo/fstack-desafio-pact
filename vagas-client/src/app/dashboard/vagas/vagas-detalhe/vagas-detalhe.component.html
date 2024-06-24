@@ -1,66 +1,120 @@
-<mat-card class="card-container">
-  <mat-card-title class="card-title">Cadastrar Vaga de Emprego</mat-card-title>
-  <mat-card-content>
-    <form class="form-container" (ngSubmit)="onSubmit()">
-      <mat-form-field class="full-width">
-        <mat-label>Título da Vaga</mat-label>
-        <input
-          matInput
-          placeholder="Ex: Desenvolvedor Front-end"
-          [(ngModel)]="vaga.titulo"
-          name="titulo"
-          required
-        />
-      </mat-form-field>
+<mat-card class="p-2 flex flex-col h-screen">
+  <mat-card-title class="p-4">
+    <span class="text-indigo-500 font-semibold">Cadastro de Vaga</span>
+  </mat-card-title>
 
-      <mat-form-field class="full-width">
-        <mat-label>Descrição</mat-label>
-        <textarea
-          matInput
-          placeholder="Descreva a vaga"
-          [(ngModel)]="vaga.descricao"
-          name="descricao"
-          required
-        ></textarea>
-      </mat-form-field>
+  <mat-card-content class="flex flex-1 m-3">
+    <form>
+      <section class="flex-1">
+        <mat-form-field class="w-full">
+          <mat-label>Título da Vaga</mat-label>
+          <input
+            matInput
+            placeholder="Ex: Desenvolvedor Front-endsd"
+            [(ngModel)]="vaga.titulo"
+            name="titulo"
+            required
+          />
+        </mat-form-field>
 
-      <mat-form-field class="half-width">
-        <mat-label>Localização</mat-label>
-        <input
-          matInput
-          placeholder="Ex: São Paulo"
-          [(ngModel)]="vaga.localizacao"
-          name="localizacao"
-          required
-        />
-      </mat-form-field>
+        <mat-form-field class="w-full min-h-60">
+          <mat-label>Descrição</mat-label>
+          <textarea
+            matInput
+            placeholder="Descreva a vaga"
+            [(ngModel)]="vaga.descricao"
+            name="descricao"
+            required
+          ></textarea>
+        </mat-form-field>
+      </section>
+      <section class="flex-1 flex-row mt-2">
+        <mat-form-field class="p-1">
+          <mat-label>Localização</mat-label>
+          <input
+            matInput
+            placeholder="Ex: São Paulo"
+            [(ngModel)]="vaga.localizacao"
+            name="localizacao"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field class="p-1">
+          <mat-label>Salário</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Ex: 3000"
+            [(ngModel)]="vaga.salario"
+            name="salario"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field class="p-1">
+          <mat-label>Data de Início</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="vaga.dataCriacao"
+            name="dataCriacao"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-      <mat-form-field class="half-width">
-        <mat-label>Salário</mat-label>
-        <input
-          matInput
-          type="number"
-          placeholder="Ex: 3000"
-          [(ngModel)]="vaga.salario"
-          name="salario"
-          required
-        />
-      </mat-form-field>
-
-      <mat-form-field class="half-width">
-        <mat-label>Data de Início</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [(ngModel)]="vaga.dataInicio"
-          name="dataInicio"
-          required
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" type="submit">Cadastrar</button>
+        <mat-form-field class="p-1">
+          <mat-label>Data de Vencimento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            [(ngModel)]="vaga.dataVencimento"
+            name="dataVencimento"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </section>
+      <section class="flex items-center justify-between">
+        <mat-form-field class="w-full">
+          <mat-label>Requisitos Obrigatórios</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter fruits">
+            @for (requisito of requisitos(); track requisito) {
+            <mat-chip-row
+              (removed)="remove(requisito)"
+              [editable]="true"
+              (edited)="edit(requisito, $event)"
+              [aria-description]="'press enter to edit ' + requisito.name"
+            >
+              {{ requisito.name }}
+              <button
+                matChipRemove
+                [attr.aria-label]="'remove ' + requisito.name"
+              >
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            }
+            <input
+              placeholder="Insira as habilitadas requeridas ..."
+              [matChipInputFor]="chipGrid"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-grid>
+        </mat-form-field>
+        <div class="w-1/3 mx-5">
+          <v-button (navigate)="onSubmit()" [any]="'Cadastrar'" type="submit">
+          </v-button>
+        </div>
+      </section>
     </form>
   </mat-card-content>
 </mat-card>

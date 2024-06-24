@@ -1,4 +1,31 @@
-<div>@if(loginService.hasPermission('analista')){ }</div>
+@if(loginService.hasPermission('analista')){
+<div class="flex flex-col h-screen">
+  <main class="flex flex-1">
+    <section class="flex-1 bg-white p-3">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-semibold">Dashboard</h3>
+        <button class="bg-green-500 text-white px-4 py-2 rounded">
+          Criar Vagas
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <div class="flex-1 min-w-0 bg-green-200 p-4">
+          Vagas Criadas
+          <span>0</span>
+        </div>
+        <div class="flex-1 min-w-0 bg-blue-200 p-4">
+          Vagas Abertas
+          <span>0</span>
+        </div>
+        <div class="flex-1 min-w-0 bg-red-200 p-4">
+          Vagas Em Processo
+          <span>0</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+}
 
 <div>
   @if(loginService.hasPermission('candidato')){

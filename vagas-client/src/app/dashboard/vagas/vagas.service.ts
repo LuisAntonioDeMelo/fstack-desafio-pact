@@ -199,30 +199,6 @@ export class VagaService {
       Prioridade.MEDIA,
       new Date('2024-11-30')
     ),
-    new Vaga(
-      UUID.UUID(),
-      'COD002',
-      'Desenvolvedor Back-end',
-      'Desenvolver APIs e lógica de negócios',
-      new Date(),
-      'Rio de Janeiro',
-      6000,
-      Status.FECHADA,
-      Prioridade.MEDIA,
-      new Date('2024-11-30')
-    ),
-    new Vaga(
-      UUID.UUID(),
-      'COD002',
-      'Desenvolvedor Back-end',
-      'Desenvolver APIs e lógica de negócios',
-      new Date(),
-      'Rio de Janeiro',
-      6000,
-      Status.FECHADA,
-      Prioridade.MEDIA,
-      new Date('2024-11-30')
-    ),
   ];
 
   getVagas(): Vaga[] {

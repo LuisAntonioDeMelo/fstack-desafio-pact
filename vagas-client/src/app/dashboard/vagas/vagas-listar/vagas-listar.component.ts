@@ -13,6 +13,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { VButtonModule } from '../../../components/custom.module';
 
 @Component({
   selector: 'app-vagas-listar',
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
     MatTableModule,
     MatPaginatorModule,
     MatIcon,
+    VButtonModule,
   ],
   templateUrl: './vagas-listar.component.html',
   styleUrl: './vagas-listar.component.css',

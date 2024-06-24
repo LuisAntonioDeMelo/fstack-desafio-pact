@@ -4,12 +4,18 @@ export enum Status {
   ABERTA = 'ABERTA',
   FECHADA = 'FECHADA',
   CANCELADA = 'CANCELADA',
+  CRIADA = 'CRIADA',
+  EM_PROCESSO = 'EM_PROCESSO',
 }
 
 export enum Prioridade {
   ALTA = 'ALTA',
   MEDIA = 'MEDIA',
   BAIXA = 'BAIXA',
+}
+
+export interface Requisito {
+  name: string;
 }
 
 export class Vaga {

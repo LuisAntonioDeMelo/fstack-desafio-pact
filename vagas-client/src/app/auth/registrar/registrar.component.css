@@ -3,6 +3,6 @@ mat-form-field {
 
 }
 
-.mat-form-field-appearance-legacy.mat-form-field-readonly .mat-form-field-underline {
-    background-color: rgba(127, 127, 127, 0.25);
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #fdfbff !important;
 }
