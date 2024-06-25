@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { VagaService } from '../../services/vagas.service';
 import { Vaga } from './vaga.model';
 import { VagasGridComponent } from './vagas-grid/vagas-grid.component';
+import { AnalistaService } from '../../services/analista.service';
 
 @Component({
   selector: 'app-vagas',

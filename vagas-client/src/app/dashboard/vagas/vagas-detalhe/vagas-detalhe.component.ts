@@ -73,8 +73,8 @@ export class VagasDetalheComponent implements OnInit {
   ngOnInit(): void {
     const vagaEditar = this.activetedRoute.snapshot.paramMap.get('vaga');
     if (vagaEditar) {
-      this.vaga = JSON.parse(vagaEditar as string);
-      console.log(this.vaga);
+      this.popularObjeto(vagaEditar);
+
       this.vaga.requisitos.forEach((re) => {
         this.requisitos.update((requisitos) => [
           ...requisitos,
@@ -90,24 +90,19 @@ export class VagasDetalheComponent implements OnInit {
     }
   }
 
-  //criar dialog ao cadastrar
-  //add
-  // openDialog(animIni: string, animEnd: string): void {
-  //   this.dialog.open(DialogVaga, {
-  //     width: '250px',
-  //     animIni,
-  //     animEnd,
-  //   });
-  // }
+  private popularObjeto(vagaEditar: string) {
+    const vagaObject = JSON.parse(vagaEditar as string);
+
+    this.vaga = vagaObject as Vaga;
+    this.vaga.dataCriacao = parseDate(vagaObject.dataCriacao);
+    this.vaga.dataVencimento = parseDate(vagaObject.dataVencimento);
+  }
 
   onSubmit() {
     this.vaga.idAnalistaResp = localStorage.getItem('id_user_role') as string;
     this.vaga.requisitos = [...this.requisitos.call(this)];
-    console.log(this.vaga);
     this.vagaService.salvarVaga(this.vaga).subscribe({
       next: (response) => {
-        console.log(response);
-        //alert vaga salva
         this.router.navigate(['/dashboard/vagas/']);
       },
       error: (error) => {
@@ -152,4 +147,17 @@ export class VagasDetalheComponent implements OnInit {
       return requisitos;
     });
   }
+}
+
+function parseDate(dateArray: number[]): Date {
+  if (!dateArray) return new Date();
+
+  if (dateArray.length !== 3) {
+    throw new Error('data invalida');
+  }
+  const date = new Date(Date.UTC(dateArray[0], dateArray[1] - 1, dateArray[2]));
+  if (isNaN(date.getTime())) {
+    throw new Error('Data inválida.');
+  }
+  return date;
 }
