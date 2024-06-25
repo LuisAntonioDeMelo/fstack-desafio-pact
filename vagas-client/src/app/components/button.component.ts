@@ -3,7 +3,7 @@ import { EventEmitter, Component, Input, Output } from '@angular/core';
 @Component({
   selector: 'v-button',
   template: `
-    <div [class]="width">
+    <div [class]="class">
       <button
         class="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
         (click)="onClick()"
@@ -29,7 +29,7 @@ import { EventEmitter, Component, Input, Output } from '@angular/core';
 })
 export class VButtonComponent {
   @Input() any: any;
-  @Input() width: string = 'w-full';
+  @Input() class: string = 'w-full';
   @Output() navigate = new EventEmitter();
 
   onClick() {

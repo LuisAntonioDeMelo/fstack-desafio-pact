@@ -9,7 +9,7 @@
   <div class="demo-section">
     <button mat-button>
       notificações
-      <mat-icon matBadge="15">home</mat-icon>
+      <mat-icon [matBadge]="qtdNotificacao()">home</mat-icon>
       <span class="cdk-visually-hidden"> </span>
     </button>
   </div>
@@ -18,7 +18,12 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav opened mode="side" [style.width]="sidenaWidth()">
+  <mat-sidenav
+    class="mat-elevation-z3"
+    opened
+    mode="side"
+    [style.width]="sidenaWidth()"
+  >
     <app-custom-sidenav
       [nomeUsuario]="nomeUsuario"
       [role]="usuarioRole"

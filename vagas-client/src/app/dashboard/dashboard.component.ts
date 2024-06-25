@@ -15,6 +15,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CustomSidenavComponent } from './custom-sidenav/custom-sidenav.component';
 import { LoginService } from '../auth/login/login.service';
 import { UsuarioService } from '../auth/usuario.service';
+import { VagaService } from './vagas/vagas.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,15 +41,19 @@ export class DashboardComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    public loginService: LoginService
+    public loginService: LoginService,
+    private vagaService: VagaService
   ) {}
 
   collapsed = signal(false);
+
+  qtdNotificacao = signal(0);
 
   sidenaWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
 
   nomeUsuario: string = '';
   usuarioRole: string = '';
+
   ngOnInit(): void {
     this.obterUsuario();
   }
@@ -65,6 +70,12 @@ export class DashboardComponent implements OnInit {
         console.log(res);
         this.nomeUsuario = res.pessoa.nome;
         this.usuarioRole = res.role;
+
+        if (res.role === 'ANALISTA_RH') {
+          localStorage.setItem('id_user_role', res.pessoa.analista.id);
+        } else {
+          localStorage.setItem('id_user_role', res.pessoa.candidato.id);
+        }
       },
       error: (error) => {},
     });

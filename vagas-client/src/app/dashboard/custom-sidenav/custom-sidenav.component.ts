@@ -37,18 +37,18 @@ export class CustomSidenavComponent {
         },
         {
           icon: 'analytics',
-          label: 'Admin',
-          route: 'admin',
-        },
-        {
-          icon: 'analytics',
           label: 'Vagas',
           route: 'vagas',
         },
         {
-          icon: 'dashboard',
+          icon: 'account_box',
           label: 'Candidatos',
           route: 'candidatos',
+        },
+        {
+          icon: 'admin_panel_settings',
+          label: 'Admin',
+          route: 'admin',
         },
       ])
     : signal<MenuItem[]>([
@@ -63,7 +63,7 @@ export class CustomSidenavComponent {
           route: 'vagas',
         },
         {
-          icon: 'dashboard',
+          icon: 'account_box',
           label: 'Area Candidato',
           route: 'candidatos',
         },

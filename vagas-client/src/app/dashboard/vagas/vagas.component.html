@@ -5,23 +5,5 @@
 
 <!-- vizualizar e candidatar para vagas se for usuario -->
 @if (loginService.hasPermission('candidato')) {
-<h1>Vagas</h1>
-<div class="grid grid-cols-3 gap-4">
-  <mat-card class="bg-white border border-gray-200 rounded-lg shadow-md">
-    <mat-card-header>{{ "Dev javas java" }}</mat-card-header>
-    <mat-card-subtitle>
-      <img src="/assets/profile-pic.jpg" width="100" height="100" />
-    </mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ "vaga descricao" }}...</p></mat-card-content
-    >
-    <mat-card-footer>
-      <mat-card-actions
-        >das
-        <button></button>
-        <button>Saiba Mais</button>
-      </mat-card-actions>
-    </mat-card-footer>
-  </mat-card>
-</div>
+<app-vagas-grid [vagas]="vagas"></app-vagas-grid>
 }

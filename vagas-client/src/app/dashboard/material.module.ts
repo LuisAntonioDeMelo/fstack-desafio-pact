@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   exports: [
+    MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,

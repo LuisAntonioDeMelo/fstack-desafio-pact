@@ -1,4 +1,5 @@
-<mat-card class="p-2 flex flex-col h-screen">
+@if(loginService.hasPermission('analista')){
+<mat-card class="p-2 flex flex-col h-full">
   <mat-card-title class="p-4">
     <span class="text-indigo-500 font-semibold">Cadastro de Vaga</span>
   </mat-card-title>
@@ -6,26 +7,50 @@
   <mat-card-content class="flex flex-1 m-3">
     <form>
       <section class="flex-1">
-        <mat-form-field class="w-full">
+        <mat-form-field
+          class="w-full"
+          [class.mat-form-field-invalid]="hasError()"
+        >
           <mat-label>Título da Vaga</mat-label>
           <input
+            #tituloField="ngModel"
+            required
             matInput
             placeholder="Ex: Desenvolvedor Front-endsd"
             [(ngModel)]="vaga.titulo"
             name="titulo"
             required
           />
+          <mat-error
+            *ngIf="
+              tituloField.invalid &&
+              tituloField.errors &&
+              tituloField.errors['required']
+            "
+          >
+            <small>* campo obrigatorio</small>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="w-full min-h-60">
           <mat-label>Descrição</mat-label>
           <textarea
             matInput
+            #descricaoField="ngModel"
             placeholder="Descreva a vaga"
             [(ngModel)]="vaga.descricao"
             name="descricao"
             required
           ></textarea>
+          <mat-error
+            *ngIf="
+              descricaoField.invalid &&
+              descricaoField.errors &&
+              descricaoField.errors['required']
+            "
+          >
+            <small>* campo obrigatorio</small>
+          </mat-error>
         </mat-form-field>
       </section>
       <section class="flex-1 flex-row mt-2">
@@ -33,15 +58,26 @@
           <mat-label>Localização</mat-label>
           <input
             matInput
+            #localizacaoField="ngModel"
             placeholder="Ex: São Paulo"
             [(ngModel)]="vaga.localizacao"
             name="localizacao"
             required
           />
+          <mat-error
+            *ngIf="
+              localizacaoField.invalid &&
+              localizacaoField.errors &&
+              localizacaoField.errors['required']
+            "
+          >
+            <small>* campo obrigatorio</small>
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="p-1">
           <mat-label>Salário</mat-label>
           <input
+            #salarioField="ngModel"
             matInput
             type="number"
             placeholder="Ex: 3000"
@@ -49,11 +85,21 @@
             name="salario"
             required
           />
+          <mat-error
+            *ngIf="
+              salarioField.invalid &&
+              salarioField.errors &&
+              salarioField.errors['required']
+            "
+          >
+            <small>* campo obrigatorio</small>
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="p-1">
           <mat-label>Data de Início</mat-label>
           <input
             matInput
+            #dataCriacaoField="ngModel"
             [matDatepicker]="picker"
             [(ngModel)]="vaga.dataCriacao"
             name="dataCriacao"
@@ -64,6 +110,15 @@
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              dataCriacaoField.invalid &&
+              dataCriacaoField.errors &&
+              dataCriacaoField.errors['required']
+            "
+          >
+            <small>* campo obrigatorio</small>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="p-1">
@@ -81,6 +136,19 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
+        <mat-form-field class="p-1">
+          <mat-label>Tipo Vaga</mat-label>
+          <select
+            matNativeControl
+            required
+            [(ngModel)]="vaga.tipoVaga"
+            name="tipoVaga"
+          >
+            <option value="REMOTO">Remoto</option>
+            <option value="HIBRIDO">Híbrido</option>
+            <option value="PRESENCIAL">Presencial</option>
+          </select>
+        </mat-form-field>
       </section>
       <section class="flex items-center justify-between">
         <mat-form-field class="w-full">
@@ -91,12 +159,12 @@
               (removed)="remove(requisito)"
               [editable]="true"
               (edited)="edit(requisito, $event)"
-              [aria-description]="'press enter to edit ' + requisito.name"
+              [aria-description]="'press enter to edit ' + requisito.nome"
             >
-              {{ requisito.name }}
+              {{ requisito.nome }}
               <button
                 matChipRemove
-                [attr.aria-label]="'remove ' + requisito.name"
+                [attr.aria-label]="'remove ' + requisito.nome"
               >
                 <mat-icon>cancel</mat-icon>
               </button>
@@ -105,16 +173,29 @@
             <input
               placeholder="Insira as habilitadas requeridas ..."
               [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
               [matChipInputAddOnBlur]="addOnBlur"
               (matChipInputTokenEnd)="add($event)"
             />
           </mat-chip-grid>
         </mat-form-field>
-        <div class="w-1/3 mx-5">
-          <v-button (navigate)="onSubmit()" [any]="'Cadastrar'" type="submit">
+      </section>
+      <div class="flex justify-end mt-auto">
+        <div class="w-1/6">
+          <v-button
+            [class]="'w-fill mt-3'"
+            (navigate)="onSubmit()"
+            [any]="'Cadastrar'"
+            type="submit"
+          >
           </v-button>
         </div>
-      </section>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>
+} @if(loginService.hasPermission('candidato')){
+<mat-card appearance="outlined">
+  <mat-card-content>Simple card</mat-card-content>
+</mat-card>
+}

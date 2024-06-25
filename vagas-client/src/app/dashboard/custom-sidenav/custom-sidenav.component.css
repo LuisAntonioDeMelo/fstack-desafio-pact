@@ -33,7 +33,7 @@
 
 .selected-menu-item {
     border-left: 5px solid;
-    border-left-color: indigo;
+    border-left-color: rgb(107, 39, 156);
 }
 
 .mat-mdc-nav-list .mat-mdc-list-item {

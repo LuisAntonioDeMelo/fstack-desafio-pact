@@ -18,7 +18,6 @@ mat-sidenav-container {
 
 .logout-button {
     margin-left: auto;
-    /* Garante que o botão logout fique no final */
 }
 
 .content {

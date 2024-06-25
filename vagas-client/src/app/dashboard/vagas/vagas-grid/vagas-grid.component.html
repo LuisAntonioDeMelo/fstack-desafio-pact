@@ -1,0 +1,41 @@
+<h5 class="text-indigo-500"><span class="font-semibold">Vagas</span></h5>
+<div class="grid grid-cols-3 gap-4">
+  <mat-card *ngFor="let vaga of vagas" class="p-4">
+    <mat-card-header>
+      <mat-card-title class="">
+        <span class="font-semibold">{{ vaga.titulo }}</span>
+      </mat-card-title>
+      <mat-card-subtitle class="mt-4">
+        Localização: {{ vaga.localizacao }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="mt-2 text-center">
+      <p class="bg-green-500 rounded-lg text-white">
+        {{ vaga.status | lowercase }}
+      </p>
+    </mat-card-content>
+    <mat-card-content class="mt-10 min-h-40">
+      <img class="w-full" />
+      <p>{{ vaga.descricao }}...</p>
+      <p>
+        <span class="font-semibold">Requisitos:</span>
+        <span *ngFor="let req of vaga.requisitos">
+          {{ req.nome }}
+        </span>
+      </p>
+    </mat-card-content>
+    <mat-card-footer class="mt-10">
+      <mat-card-actions class="flex justify-between">
+        <button mat-raised-button color="primary" (click)="candidatar(vaga.id)">
+          Candidatar
+        </button>
+
+        <div class="w-1/4">
+          <v-button [any]="'saiba +'" (navigate)="vagaDetalhe(vaga)"
+            >Saiba Mais</v-button
+          >
+        </div>
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
+</div>

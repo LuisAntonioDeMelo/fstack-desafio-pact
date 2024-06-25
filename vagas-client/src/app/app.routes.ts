@@ -30,7 +30,8 @@ export const routes: Routes = [
         component: VagasComponent,
       },
       { path: 'vagas/cadastrar', component: VagasDetalheComponent },
-      { path: 'vagas/editar/:id', component: VagasDetalheComponent },
+      { path: 'vagas/detalhe', component: VagasDetalheComponent },
+      { path: 'vagas/editar', component: VagasDetalheComponent },
     ],
   },
 ];

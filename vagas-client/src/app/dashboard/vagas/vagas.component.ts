@@ -4,13 +4,14 @@ import { LoginService } from '../../auth/login/login.service';
 import { MatCardModule } from '@angular/material/card';
 import { VagaService } from './vagas.service';
 import { Vaga } from './vaga.model';
+import { VagasGridComponent } from './vagas-grid/vagas-grid.component';
 
 @Component({
   selector: 'app-vagas',
   standalone: true,
   templateUrl: './vagas.component.html',
   styleUrl: './vagas.component.css',
-  imports: [VagasListarComponent, MatCardModule],
+  imports: [VagasListarComponent, MatCardModule, VagasGridComponent],
 })
 export class VagasComponent implements OnInit {
   vagas: Vaga[] = [];
@@ -18,7 +19,25 @@ export class VagasComponent implements OnInit {
     public loginService: LoginService,
     private vagasService: VagaService
   ) {}
+
   ngOnInit(): void {
-    this.vagas = [...this.vagasService.getVagas()];
+    const idUser = localStorage.getItem('id_user_role') as string;
+
+    if (this.loginService.hasPermission('analista')) {
+      this.vagasService.obterVagasPorAnalista(idUser).subscribe({
+        next: (res) => {
+          this.vagas = [...res];
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    } else {
+      this.vagasService.obterVagasHome().subscribe({
+        next: (res) => {
+          this.vagas = [...res];
+        },
+      });
+    }
   }
 }

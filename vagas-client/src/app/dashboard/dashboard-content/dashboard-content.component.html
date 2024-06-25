@@ -4,22 +4,27 @@
     <section class="flex-1 bg-white p-3">
       <div class="flex justify-between items-center mb-4">
         <h3 class="font-semibold">Dashboard</h3>
-        <button class="bg-green-500 text-white px-4 py-2 rounded">
-          Criar Vagas
-        </button>
       </div>
       <div class="flex flex-wrap gap-4">
         <div class="flex-1 min-w-0 bg-green-200 p-4">
           Vagas Criadas
-          <span>0</span>
+          <span>{{ status.qtdCriada }}</span>
         </div>
         <div class="flex-1 min-w-0 bg-blue-200 p-4">
           Vagas Abertas
-          <span>0</span>
+          <span>{{ status.qtdAberta }}</span>
+        </div>
+        <div class="flex-1 min-w-0 bg-yellow-200 p-4">
+          Vagas Em Processo
+          <span>{{ status.qtdEmProcesso }}</span>
         </div>
         <div class="flex-1 min-w-0 bg-red-200 p-4">
-          Vagas Em Processo
-          <span>0</span>
+          Vagas Canceladas
+          <span>{{ status.qtdCancelada }}</span>
+        </div>
+        <div class="flex-1 min-w-0 bg-indigo-800 p-4 text-white">
+          Vagas Em Fechadas
+          <span class="">{{ status.qtdFechada }}</span>
         </div>
       </div>
     </section>
@@ -27,11 +32,7 @@
 </div>
 }
 
-<div>
-  @if(loginService.hasPermission('candidato')){
-  <p>dashboard-content Candidato!</p>
-  }
-</div>
+<div>@if(loginService.hasPermission('candidato')){ dsdsd }</div>
 <!-- tailwind temps -->
 <!-- <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
     <div

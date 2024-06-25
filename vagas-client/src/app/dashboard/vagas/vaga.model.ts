@@ -14,12 +14,19 @@ export enum Prioridade {
   BAIXA = 'BAIXA',
 }
 
+export enum TipoVaga {
+  REMOTO = 'REMOTO',
+  HIBRIDO = 'HIBRIDO',
+  PRESENCIAL = 'PRESENCIAL',
+}
+
 export interface Requisito {
-  name: string;
+  nome: string;
 }
 
 export class Vaga {
   id: UUID;
+  idAnalistaResp: string;
   codigoVaga: string;
   titulo: string;
   descricao: string;
@@ -29,10 +36,12 @@ export class Vaga {
   status: Status;
   prioridade: Prioridade;
   dataVencimento: Date;
-  dataInicio: any;
+  requisitos: Requisito[];
+  tipoVaga: TipoVaga;
 
   constructor(
     id: UUID,
+    idAnalistaResp: string,
     codigoVaga: string,
     titulo: string,
     descricao: string,
@@ -41,9 +50,12 @@ export class Vaga {
     salario: number,
     status: Status,
     prioridade: Prioridade,
-    dataVencimento: Date
+    dataVencimento: Date,
+    requisitos: Requisito[],
+    tipoVaga: TipoVaga
   ) {
     this.id = id;
+    this.idAnalistaResp = idAnalistaResp;
     this.codigoVaga = codigoVaga;
     this.titulo = titulo;
     this.descricao = descricao;
@@ -53,5 +65,7 @@ export class Vaga {
     this.status = status;
     this.prioridade = prioridade;
     this.dataVencimento = dataVencimento;
+    this.requisitos = requisitos;
+    this.tipoVaga = tipoVaga;
   }
 }

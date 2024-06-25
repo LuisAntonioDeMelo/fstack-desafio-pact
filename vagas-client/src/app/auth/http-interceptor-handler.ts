@@ -10,7 +10,9 @@ export const httpInteceptorHandler: HttpInterceptorFn = (request, next) => {
 
   if (
     token &&
-    (!router.url.includes('/login') || !router.url.includes('/registrar'))
+    (!router.url.includes('/login') ||
+      !router.url.includes('/registrar') ||
+      !router.url.includes('/'))
   ) {
     request = request.clone({
       setHeaders: { Authorization: 'Bearer ' + token },
@@ -21,8 +23,10 @@ export const httpInteceptorHandler: HttpInterceptorFn = (request, next) => {
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 403 || err.status === 401) {
-          alert('Usuario Não está mais logado');
-          router.navigate(['/login']);
+          alert('HTTP error: ' + err.status + ' Verifique novamente.');
+
+          console.log('error : token não encontrado');
+          // router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);
         }
