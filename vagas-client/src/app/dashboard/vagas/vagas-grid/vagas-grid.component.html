@@ -26,14 +26,12 @@
     </mat-card-content>
     <mat-card-footer class="mt-10">
       <mat-card-actions class="flex justify-between">
-        <button mat-raised-button color="primary" (click)="candidatar(vaga.id)">
+        <button mat-raised-button color="primary" (click)="candidatar(vaga)">
           Candidatar
         </button>
 
         <div class="w-1/4">
-          <v-button [any]="'saiba +'" (navigate)="vagaDetalhe(vaga)"
-            >Saiba Mais</v-button
-          >
+          <v-button [any]="'saiba +'" (navigate)="vagaDetalhe(vaga)">Saiba Mais</v-button>
         </div>
       </mat-card-actions>
     </mat-card-footer>

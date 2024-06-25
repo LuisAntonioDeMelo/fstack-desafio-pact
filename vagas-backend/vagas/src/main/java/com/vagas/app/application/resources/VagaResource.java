@@ -1,6 +1,6 @@
 package com.vagas.app.application.resources;
 
-import com.vagas.app.application.resources.dto.AuthenticationRequest;
+import com.vagas.app.application.resources.dto.StatusVagasResponse;
 import com.vagas.app.application.resources.dto.VagaRequest;
 import com.vagas.app.application.services.VagaService;
 import com.vagas.app.application.services.erros.VagaErrorException;
@@ -28,7 +28,7 @@ public class VagaResource {
         try {
             Vaga vaga = vagaService.salvar(vagaRequest);
             return ResponseEntity.ok(vaga);
-        }catch (VagaErrorException e) {
+        } catch (VagaErrorException e) {
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -41,12 +41,19 @@ public class VagaResource {
 
     @DeleteMapping(params = "id")
     public ResponseEntity<?> deletar(@RequestParam("id") String id) {
-        return ResponseEntity.ok().build();
+        vagaService.deletarVaga(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(params = "id_analista", name = "/vagas-analista")
+    @GetMapping(params = "id_analista", value = "/vagas-analista")
     public ResponseEntity<List<Vaga>> listar(@RequestParam("id_analista") String id) {
         List<Vaga> vagas = vagaService.listarVagasPorIdAnalista(id);
         return ResponseEntity.ok(vagas);
+    }
+
+    @GetMapping(value = "/vagas-dash", params = "id_analista")
+    public ResponseEntity<StatusVagasResponse> listarQuantidadePorStatus(@RequestParam("id_analista") String id) {
+        StatusVagasResponse statusVagasResponses = vagaService.listarQuantidadeDeVagasPorIdAnalista(id);
+        return ResponseEntity.ok(statusVagasResponses);
     }
 }

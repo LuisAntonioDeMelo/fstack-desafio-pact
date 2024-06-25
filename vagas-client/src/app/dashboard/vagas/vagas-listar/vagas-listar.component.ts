@@ -8,7 +8,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 import { Vaga } from '../vaga.model';
-import { VagaService } from '../vagas.service';
+import { VagaService } from '../../../services/vagas.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';

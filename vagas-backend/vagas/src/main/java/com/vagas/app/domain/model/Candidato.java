@@ -36,13 +36,13 @@ public class Candidato  {
 
     private BigDecimal pretensaoSalarial;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "tb_candidato_vaga",
             joinColumns = @JoinColumn(name = "candidato_id"),
             inverseJoinColumns = @JoinColumn(name = "vaga_id")
     )
-    private Set<Vaga> vagas;
+    private Set<Vaga> vagas = new HashSet<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "candidato", fetch = FetchType.LAZY)

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Vaga } from './vaga.model';
+import { Vaga } from '../dashboard/vagas/vaga.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -41,28 +41,4 @@ export class VagaService {
   obterVagasAbertas() {
     throw new Error('Method not implemented.');
   }
-
-  cadidatarParaVaga(data: any) {
-    return this.http.post(`${this.$api}/`, data, {
-      responseType: 'json',
-    });
-  }
-  //mock
-  // private vagas: Vaga[] = [
-  //   new Vaga(
-  //     UUID.UUID(),
-  //     '',
-  //     'COD001',
-  //     'Desenvolvedor Front-end',
-  //     'Desenvolver interfaces de usuário',
-  //     new Date(),
-  //     'São Paulo',
-  //     5000,
-  //     Status.ABERTA,
-  //     Prioridade.ALTA,
-  //     new Date('2024-12-31'),
-  //     [],
-  //     TipoVaga.HIBRIDO
-  //   ),
-  // ];
 }

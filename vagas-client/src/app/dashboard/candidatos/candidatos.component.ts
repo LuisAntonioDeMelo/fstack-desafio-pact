@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { LoginService } from '../../auth/login/login.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-candidatos',

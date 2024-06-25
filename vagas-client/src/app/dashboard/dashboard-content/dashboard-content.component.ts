@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LoginService } from '../../auth/login/login.service';
+import { LoginService } from '../../services/login.service';
 import { MatCardModule } from '@angular/material/card';
-import { VagaService } from '../vagas/vagas.service';
+import { VagaService } from '../../services/vagas.service';
 
 @Component({
   selector: 'app-dashboard-content',
@@ -17,12 +17,14 @@ export class DashboardContentComponent implements OnInit {
   status: StatusVaga = new StatusVaga();
 
   constructor() {}
+
   ngOnInit(): void {
     const id = localStorage.getItem('id_user_role') as string;
-    console.log(id);
-    this.vagaService
-      .obterStatusPorAnalista(id)
-      .subscribe((res: StatusVaga) => (this.status = res));
+    if (id) {
+      this.vagaService
+        .obterStatusPorAnalista(id)
+        .subscribe((res: StatusVaga) => (this.status = res));
+    }
   }
 }
 

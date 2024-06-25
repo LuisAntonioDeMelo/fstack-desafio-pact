@@ -13,8 +13,6 @@ public class Notificacao {
     private Long codigoNotificacao;
     private String mensagem;
 
-    //notificacao relacionada ao canditado x e ao analista y
-    //
     @ManyToOne
     @JoinColumn(name = "analista_id")
     private AnalistaRH analista;

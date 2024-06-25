@@ -3,12 +3,12 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AdminComponent } from './dashboard/admin/admin.component';
 import { RegistrarComponent } from './auth/registrar/registrar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { CandidatosComponent } from './dashboard/candidatos/candidatos.component';
 import { VagasComponent } from './dashboard/vagas/vagas.component';
 import { DashboardContentComponent } from './dashboard/dashboard-content/dashboard-content.component';
 import { authGuard } from './auth/auth.guard';
 import { VagasDetalheComponent } from './dashboard/vagas/vagas-detalhe/vagas-detalhe.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },

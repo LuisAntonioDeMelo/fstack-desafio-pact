@@ -19,9 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogVaga } from '../dialog/vaga.dialog.component';
-import { VagaService } from '../vagas.service';
+import { VagaService } from '../../../services/vagas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from '../../../auth/login/login.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-vagas-detalhe',

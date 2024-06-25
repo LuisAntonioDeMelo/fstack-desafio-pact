@@ -1,19 +1,12 @@
 <mat-card class="p-2 mat-elevation-z1">
-  <mat-card-title class="p-4 mt-2 text-indigo-500"
-    ><strong>Listar Vagas</strong></mat-card-title
-  >
+  <mat-card-title class="p-4 mt-2 text-indigo-500"><strong>Listar Vagas</strong></mat-card-title>
   <div class="flex flex-1">
     <mat-card-content class="flex-1">
       <div class="flex items-center justify-between">
         <mat-form-field appearance="fill" class="w-full">
           <mat-label>Pesquisa</mat-label>
-          <input
-            matInput
-            placeholder="Digite sua pesquisa"
-            [(ngModel)]="search"
-            (ngModelChange)="onSearch($event)"
-            name="searchQuery"
-          />
+          <input matInput placeholder="Digite sua pesquisa" [(ngModel)]="search" (ngModelChange)="onSearch($event)"
+            name="searchQuery" />
         </mat-form-field>
 
         <button mat-button color="primary" (click)="onSearch(search)">
@@ -95,12 +88,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator
-      [length]="this.dataSource.data.length"
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-      aria-label=""
-    >
+    <mat-paginator [length]="this.dataSource.data.length" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+      aria-label="">
     </mat-paginator>
   </mat-card-content>
 </mat-card>

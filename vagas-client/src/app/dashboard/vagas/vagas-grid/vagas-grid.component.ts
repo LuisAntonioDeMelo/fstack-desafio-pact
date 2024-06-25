@@ -6,7 +6,8 @@ import { VButtonModule } from '../../../components/custom.module';
 import { MatButtonModule } from '@angular/material/button';
 import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
-import { VagaService } from '../vagas.service';
+import { VagaService } from '../../../services/vagas.service';
+import { CandidatoSerive } from '../../../services/candidato.service';
 
 @Component({
   selector: 'app-vagas-grid',
@@ -19,22 +20,24 @@ export class VagasGridComponent {
   @Input() vagas: Vaga[] = [];
 
   router = inject(Router);
-  vagaService = inject(VagaService);
+  candidatoService = inject(CandidatoSerive);
 
   constructor() {}
 
-  candidatar(idVaga: UUID) {
+  candidatar(vaga: Vaga) {
     const id_user = localStorage.getItem('id_user_role') as string;
     const data = {
-      idCanditado: id_user,
-      idVaga: idVaga,
+      idCandidato: id_user,
+      idVaga: vaga.id,
+      codVaga: vaga.codigoVaga,
     };
-    this.vagaService.cadidatarParaVaga(data).subscribe({
+
+    this.candidatoService.cadidatarParaVaga(data).subscribe({
       next: (res) => {
-        alert(res);
+        alert(JSON.stringify(res));
       },
       error: (error) => {
-        alert(error);
+        alert(error.message);
       },
     });
   }

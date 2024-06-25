@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
-import { LoginService } from '../auth/login/login.service';
-import { VagaService } from '../dashboard/vagas/vagas.service';
+import { LoginService } from '../services/login.service';
+import { VagaService } from '../services/vagas.service';
 import { Vaga } from '../dashboard/vagas/vaga.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   standalone: true,
-  imports: [MatSlideToggleModule],
+  imports: [MatSlideToggleModule, CommonModule],
 })
 export class HomeComponent implements OnInit {
   vagas: Vaga[] = [];

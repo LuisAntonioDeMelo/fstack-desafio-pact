@@ -62,8 +62,8 @@ public class Vaga {
     )
     private Set<AnalistaRH> analistas;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Requisito> requisitos;
 
 }

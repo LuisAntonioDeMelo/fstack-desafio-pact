@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { VagasListarComponent } from './vagas-listar/vagas-listar.component';
-import { LoginService } from '../../auth/login/login.service';
+import { LoginService } from '../../services/login.service';
 import { MatCardModule } from '@angular/material/card';
-import { VagaService } from './vagas.service';
+import { VagaService } from '../../services/vagas.service';
 import { Vaga } from './vaga.model';
 import { VagasGridComponent } from './vagas-grid/vagas-grid.component';
 

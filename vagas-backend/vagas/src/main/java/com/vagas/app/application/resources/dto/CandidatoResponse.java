@@ -1,2 +1,4 @@
-package com.vagas.app.application.resources.dto;public record CandidatoResponse() {
+package com.vagas.app.application.resources.dto;
+
+public record CandidatoResponse(String response) {
 }

@@ -10,8 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { LoginService } from '../login/login.service';
-import { RegistrarService } from './registrar.service';
+import { LoginService } from '../../services/login.service';
+import { RegistrarService } from '../../services/registrar.service';
 import { Router } from '@angular/router';
 import { Login, DadosUsuario, Token, Usuario } from '../model';
 

@@ -3,17 +3,15 @@ package com.vagas.app.application.services;
 import com.vagas.app.application.resources.dto.CriarUsuarioRequest;
 import com.vagas.app.application.services.erros.UsuarioNaoEncontradoException;
 import com.vagas.app.application.services.patterns.IUsuarioService;
-import com.vagas.app.domain.model.Candidato;
-import com.vagas.app.domain.model.Pessoa;
 import com.vagas.app.domain.User;
 import com.vagas.app.domain.model.AnalistaRH;
+import com.vagas.app.domain.model.Pessoa;
 import com.vagas.app.infra.repository.AnalistaRHRepository;
 import com.vagas.app.infra.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -56,8 +54,5 @@ public class AnalistaService implements IUsuarioService {
         return analistaRH;
     }
 
-    @Override
-    public void deletarUsuario(String  userId) {
 
-    }
 }

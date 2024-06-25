@@ -1,11 +1,12 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { AdminComponent } from './admin/admin.component';
 import { CandidatosComponent } from './candidatos/candidatos.component';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import {
   MatSidenav,
   MatSidenavContainer,
@@ -13,9 +14,9 @@ import {
 } from '@angular/material/sidenav';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CustomSidenavComponent } from './custom-sidenav/custom-sidenav.component';
-import { LoginService } from '../auth/login/login.service';
-import { UsuarioService } from '../auth/usuario.service';
-import { VagaService } from './vagas/vagas.service';
+import { LoginService } from '../services/login.service';
+import { NotificacacoService } from '../services/notificacao.service';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +36,7 @@ import { VagaService } from './vagas/vagas.service';
     MatSidenavContent,
     MatBadgeModule,
     CustomSidenavComponent,
+    MatMenuModule,
   ],
 })
 export class DashboardComponent implements OnInit {
@@ -42,17 +44,16 @@ export class DashboardComponent implements OnInit {
     private usuarioService: UsuarioService,
     private router: Router,
     public loginService: LoginService,
-    private vagaService: VagaService
+    private notificacaoService: NotificacacoService
   ) {}
 
   collapsed = signal(false);
-
-  qtdNotificacao = signal(0);
 
   sidenaWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
 
   nomeUsuario: string = '';
   usuarioRole: string = '';
+  notificacacoes: Notificacao[] = [];
 
   ngOnInit(): void {
     this.obterUsuario();
@@ -60,6 +61,7 @@ export class DashboardComponent implements OnInit {
 
   logout() {
     this.loginService.removeToken();
+    localStorage.removeItem('id_user_role');
     this.router.navigate(['']);
   }
 
@@ -70,14 +72,45 @@ export class DashboardComponent implements OnInit {
         console.log(res);
         this.nomeUsuario = res.pessoa.nome;
         this.usuarioRole = res.role;
-
-        if (res.role === 'ANALISTA_RH') {
-          localStorage.setItem('id_user_role', res.pessoa.analista.id);
-        } else {
-          localStorage.setItem('id_user_role', res.pessoa.candidato.id);
-        }
+        this.defineRole(res);
       },
       error: (error) => {},
     });
   }
+
+  defineRole(response: any) {
+    if (response.role === 'ANALISTA_RH') {
+      const id = response.pessoa.analista.id;
+      localStorage.setItem('id_user_role', id);
+      this.obterNotificacoesAnalista(id);
+    } else {
+      const id = response.pessoa.candidato.id;
+      localStorage.setItem('id_user_role', id);
+      this.obterNotificacoesCandidato(id);
+    }
+  }
+
+  obterNotificacoesAnalista(idUser: any) {
+    this.notificacaoService.obterNotificacoesAnalista(idUser).subscribe({
+      next: (res: Notificacao[]) => {
+        console.log(res);
+        this.notificacacoes = res;
+      },
+      error: (err) => {},
+    });
+  }
+
+  obterNotificacoesCandidato(idUser: any) {
+    this.notificacaoService.obterNotificacoesCandidato(idUser).subscribe({
+      next: (res: Notificacao[]) => {
+        console.log(res);
+        this.notificacacoes = res;
+      },
+      error: (err) => {},
+    });
+  }
+}
+
+interface Notificacao {
+  message: string;
 }

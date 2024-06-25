@@ -7,11 +7,16 @@
   <span class="spacer"></span>
 
   <div class="demo-section">
-    <button mat-button>
+    <button mat-button [matMenuTriggerFor]="notify">
       notificações
-      <mat-icon [matBadge]="qtdNotificacao()">home</mat-icon>
-      <span class="cdk-visually-hidden"> </span>
+      <mat-icon [matBadge]="notificacacoes.length">home</mat-icon>
     </button>
+    <mat-menu #notify="matMenu" class="max-auto">
+      <button class="" *ngFor="let notificacao of notificacacoes" mat-menu-item>
+        <span class="text-indigo-600"> {{ notificacao.message }}</span>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-menu>
   </div>
 
   <button mat-raised-button color="primary" (click)="logout()">Logout</button>
