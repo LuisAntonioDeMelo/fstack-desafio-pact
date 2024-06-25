@@ -1,14 +1,8 @@
 package com.vagas.app.vagas;
 
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.*;
-
 import com.vagas.app.application.resources.dto.CandidatosVinculadosAVagaDTO;
 import com.vagas.app.application.services.CandidatoService;
-import com.vagas.app.application.services.VagaService;
 import com.vagas.app.domain.model.Candidato;
 import com.vagas.app.domain.model.Status;
 import com.vagas.app.domain.model.Vaga;
@@ -20,6 +14,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class CandidatoServiceTest {
 
