@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
 import { VagaService } from '../../../services/vagas.service';
-import { CandidatoSerive } from '../../../services/candidato.service';
+import { CandidatoService } from '../../../services/candidato.service';
 
 @Component({
   selector: 'app-vagas-grid',
@@ -20,7 +20,7 @@ export class VagasGridComponent {
   @Input() vagas: Vaga[] = [];
 
   router = inject(Router);
-  candidatoService = inject(CandidatoSerive);
+  candidatoService = inject(CandidatoService);
 
   constructor() {}
 

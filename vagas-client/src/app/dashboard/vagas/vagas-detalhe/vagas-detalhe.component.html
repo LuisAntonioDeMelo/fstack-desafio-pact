@@ -144,9 +144,9 @@
             [(ngModel)]="vaga.tipoVaga"
             name="tipoVaga"
           >
-            <option value="REMOTO">Remoto</option>
-            <option value="HIBRIDO">Híbrido</option>
-            <option value="PRESENCIAL">Presencial</option>
+            <option [value]="'REMOTO'">Remoto</option>
+            <option [value]="'HIBRIDO'">Híbrido</option>
+            <option [value]="'PRESENCIAL'">Presencial</option>
           </select>
         </mat-form-field>
       </section>

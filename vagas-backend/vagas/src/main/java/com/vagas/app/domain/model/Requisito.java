@@ -21,9 +21,7 @@ public class Requisito {
     private Long id;
 
     private String nome;
-    //candidados com requitos que tem na vaga
 
-    //y vaga ten varios requisitos
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "vaga_id")

@@ -38,7 +38,9 @@ export class VagaService {
     return this.http.delete(this.$api, { params: { id } });
   }
 
-  obterVagasAbertas() {
-    throw new Error('Method not implemented.');
+  editarVaga(vaga: Vaga) {
+    return this.http.put<Vaga>(`${this.$api}/editar`, vaga, {
+      responseType: 'json',
+    });
   }
 }

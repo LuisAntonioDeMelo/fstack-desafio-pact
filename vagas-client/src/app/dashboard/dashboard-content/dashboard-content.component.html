@@ -30,6 +30,29 @@
     </section>
   </main>
 </div>
-}
+} @if(loginService.hasPermission('candidato')){
+<mat-card class="p-2 mat-elevation-z1">
+  <mat-card-title class="p-4 mt-2 text-indigo-500"
+    ><strong>Dashboard</strong></mat-card-title
+  >
 
-<div>@if(loginService.hasPermission('candidato')){ }</div>
+  <div class="grid grid-cols-3 gap-4">
+    <mat-card *ngFor="let ca of candidatos" class="p-4">
+      <mat-card-header>
+        <mat-card-title class="">
+          <span class="font-semibold">{{ ca.codigoVaga }}</span>
+        </mat-card-title>
+        <mat-card-subtitle class="mt-4">
+          Localização: {{ "Sp - São Paulo" }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="mt-2 text-center">
+        <p class="bg-blue-500 rounded-lg text-white">
+          {{ ca.statusVaga }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</mat-card>
+
+}

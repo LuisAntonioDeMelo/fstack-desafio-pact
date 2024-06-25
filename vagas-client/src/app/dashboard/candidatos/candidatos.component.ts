@@ -13,6 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
+import { UsuarioService } from '../../services/usuario.service';
 
 export interface CandidatoInteressado {
   nome: string;
@@ -39,6 +40,7 @@ export interface CandidatoInteressado {
 export class CandidatosComponent implements OnInit, AfterViewInit {
   loginService: LoginService = inject(LoginService);
   analistaService: AnalistaService = inject(AnalistaService);
+  usuarioService = inject(UsuarioService);
 
   dataSource!: MatTableDataSource<CandidatoInteressado>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,18 +49,33 @@ export class CandidatosComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['codigoVaga', 'nome', 'statusVaga', 'acoes'];
 
+  dadosPessoa: any;
+
   constructor() {}
 
   ngOnInit(): void {
     const idUser = localStorage.getItem('id_user_role') as string;
-
-    this.analistaService.obterCandidatosIngredsoAnalista(idUser).subscribe({
-      next: (res: CandidatoInteressado[]) => {
-        this.canditados = res;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: (error) => {},
-    });
+    if (this.loginService.hasPermission('analista')) {
+      this.analistaService.obterCandidatosIngredsoAnalista(idUser).subscribe({
+        next: (res: CandidatoInteressado[]) => {
+          this.canditados = res;
+          this.dataSource.paginator = this.paginator;
+        },
+        error: (error) => {},
+      });
+    }
+    if (this.loginService.hasPermission('candidato')) {
+      const { id } = this.loginService.obterUsuario();
+      this.usuarioService.obterUsuario({ id: id }).subscribe({
+        next: (res) => {
+          this.dadosPessoa = {
+            nome: res.pessoa.nome,
+            telefone: res.pessoa.telefone,
+          };
+        },
+        error: (error) => {},
+      });
+    }
   }
 
   ngAfterViewInit(): void {

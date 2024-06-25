@@ -18,7 +18,6 @@ import { VButtonModule } from '../../../components/custom.module';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogVaga } from '../dialog/vaga.dialog.component';
 import { VagaService } from '../../../services/vagas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
@@ -65,7 +64,7 @@ export class VagasDetalheComponent implements OnInit {
   vagaService = inject(VagaService);
   activetedRoute: ActivatedRoute = inject(ActivatedRoute);
   loginService = inject(LoginService);
-
+  isEditar = false;
   constructor() {
     this.vaga;
   }
@@ -73,14 +72,8 @@ export class VagasDetalheComponent implements OnInit {
   ngOnInit(): void {
     const vagaEditar = this.activetedRoute.snapshot.paramMap.get('vaga');
     if (vagaEditar) {
+      this.isEditar = true;
       this.popularObjeto(vagaEditar);
-
-      this.vaga.requisitos.forEach((re) => {
-        this.requisitos.update((requisitos) => [
-          ...requisitos,
-          { nome: re.nome },
-        ]);
-      });
     }
 
     if (this.loginService.hasPermission('candidato')) {
@@ -96,12 +89,31 @@ export class VagasDetalheComponent implements OnInit {
     this.vaga = vagaObject as Vaga;
     this.vaga.dataCriacao = parseDate(vagaObject.dataCriacao);
     this.vaga.dataVencimento = parseDate(vagaObject.dataVencimento);
+
+    this.vaga.requisitos.forEach((re) => {
+      this.requisitos.update((requisitos) => [
+        ...requisitos,
+        { nome: re.nome },
+      ]);
+    });
   }
 
   onSubmit() {
     this.vaga.idAnalistaResp = localStorage.getItem('id_user_role') as string;
     this.vaga.requisitos = [...this.requisitos.call(this)];
-    this.vagaService.salvarVaga(this.vaga).subscribe({
+
+    if (!this.isEditar) {
+      this.vagaService.salvarVaga(this.vaga).subscribe({
+        next: (response) => {
+          this.router.navigate(['/dashboard/vagas/']);
+        },
+        error: (error) => {
+          console.log(error.error);
+        },
+      });
+      return;
+    }
+    this.vagaService.editarVaga(this.vaga).subscribe({
       next: (response) => {
         this.router.navigate(['/dashboard/vagas/']);
       },

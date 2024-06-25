@@ -63,7 +63,7 @@ public class Vaga {
     private Set<AnalistaRH> analistas;
 
 
-    @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "vaga", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Requisito> requisitos;
 
 }

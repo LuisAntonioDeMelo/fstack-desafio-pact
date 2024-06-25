@@ -1,5 +1,6 @@
 package com.vagas.app.application.services;
 
+import com.vagas.app.application.resources.dto.CandidatosVinculadosAVagaDTO;
 import com.vagas.app.application.resources.dto.StatusVagasResponse;
 import com.vagas.app.application.resources.dto.VagaRequest;
 import com.vagas.app.domain.model.Requisito;
@@ -9,6 +10,7 @@ import com.vagas.app.infra.repository.AnalistaRHRepository;
 import com.vagas.app.infra.repository.RequisitoRepository;
 import com.vagas.app.infra.repository.VagaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,23 +43,36 @@ public class VagaService {
         Vaga vaga = vagaRequest.toModel();
         vaga.setCodigoVaga("cod_" + UUID.randomUUID().toString().substring(1, 7));
 
-        UUID uuid = UUID.fromString(vagaRequest.getIdAnalistaResp());
-        var analistaRH = analistaRHRepository.findById(uuid);
+        adicionarAnalistaResposavelVaga(vagaRequest, vaga);
 
-        analistaRH.ifPresent(rh -> vaga.setAnalistas(new HashSet<>(Set.of(rh))));
         var vagaSaved = vagaRepository.save(vaga);
         salvarRequisitosDaVaga(vagaRequest, vagaSaved);
-
         return vagaSaved;
     }
 
     private void salvarRequisitosDaVaga(VagaRequest vagaRequest, Vaga vagaSaved) {
-        requisitoRepository.deleteByVagaId(vagaSaved.getId());
-        var requisitos = vagaRequest.getRequisitos().stream().map(r -> {
-            return new Requisito(r.getNome(), vagaSaved);
-        }).toList();
-
+        List<Requisito> requisitos = vagaRequest.getRequisitos().stream()
+                .map(r -> new Requisito(r.getNome(), vagaSaved))
+                .collect(Collectors.toList());
         requisitoRepository.saveAll(requisitos);
+    }
+
+    public Vaga editar(VagaRequest vagaRequest) {
+        Vaga vagaDb = vagaRepository.findById(UUID.fromString(vagaRequest.getId())).orElseThrow();
+        Vaga vaga = vagaRequest.toModel();
+        BeanUtils.copyProperties(vaga, vagaDb);
+
+        adicionarAnalistaResposavelVaga(vagaRequest, vaga);
+
+        var vagaSaved = vagaRepository.save(vaga);
+        salvarRequisitosDaVaga(vagaRequest, vagaSaved);
+        return vagaSaved;
+    }
+
+    private void adicionarAnalistaResposavelVaga(VagaRequest vagaRequest, Vaga vaga) {
+        UUID uuid = UUID.fromString(vagaRequest.getIdAnalistaResp());
+        var analistaRH = analistaRHRepository.findById(uuid);
+        analistaRH.ifPresent(rh -> vaga.setAnalistas(new HashSet<>(Set.of(rh))));
     }
 
     @Transactional
@@ -66,7 +81,14 @@ public class VagaService {
         if (vaga.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Vaga não encontrada");
         }
+        if (vagaTemCandidato(vaga.get())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vaga contém candidatos em processo!");
+        }
         vagaRepository.delete(vaga.get());
+    }
+
+    private boolean vagaTemCandidato(Vaga vaga) {
+        return !vaga.getCandidatos().isEmpty();
     }
 
     public StatusVagasResponse listarQuantidadeDeVagasPorIdAnalista(String id) {
@@ -83,4 +105,5 @@ public class VagaService {
 
         return new StatusVagasResponse(qtdVagasCriadas, qtdVagasAbertas, qtdVagasFechadas, qtdVagasCanceladas, qtdVagasEmProcesso);
     }
+
 }

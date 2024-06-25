@@ -52,5 +52,13 @@
 </mat-card>
 } @if(loginService.hasPermission('candidato')){
 
-<p>listar vagas com usuario</p>
+<mat-card class="p-2 mat-elevation-z1">
+  <mat-card-title class="p-4 mt-2 text-indigo-500"
+    ><strong>Area Candidato</strong></mat-card-title
+  >
+  <mat-card-content>
+    <p>Nome : {{ dadosPessoa.nome }}</p>
+    <p>Telefone : {{ dadosPessoa.nome }}</p>
+  </mat-card-content>
+</mat-card>
 }
