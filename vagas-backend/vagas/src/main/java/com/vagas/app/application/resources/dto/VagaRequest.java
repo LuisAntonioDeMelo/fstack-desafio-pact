@@ -29,11 +29,11 @@ public class VagaRequest {
     private String tipoVaga;
     private String titulo;
 
-
     public Vaga toModel() {
         return Vaga.builder()
                 .id(ObjectUtils.isEmpty(id) ? null :UUID.fromString(id))
                 .titulo(titulo)
+                .codigoVaga(codigoVaga)
                 .dataCriacao(dataCriacao)
                 .dataVencimento(dataVencimento)
                 .status(Status.valueOf(status))
@@ -41,6 +41,22 @@ public class VagaRequest {
                 .localizacao(localizacao)
                 .descricao(descricao)
                 .salario(salario)
+                .tipoVaga(TipoVaga.valueOf(tipoVaga))
+                .build();
+    }
+    public Vaga toData(Vaga vagaDb) {
+        return Vaga.builder()
+                .id(ObjectUtils.isEmpty(id) ? null :UUID.fromString(id))
+                .titulo(titulo)
+                .codigoVaga(codigoVaga)
+                .dataCriacao(dataCriacao)
+                .dataVencimento(dataVencimento)
+                .status(Status.valueOf(status))
+                .prioridade(Prioridade.valueOf(prioridade))
+                .localizacao(localizacao)
+                .descricao(descricao)
+                .salario(salario)
+                .analistas(vagaDb.getAnalistas())
                 .tipoVaga(TipoVaga.valueOf(tipoVaga))
                 .build();
     }

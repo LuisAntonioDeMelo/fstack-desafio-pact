@@ -2,13 +2,16 @@
 
 Objetivo:
 
-criado sistema Dev Jobs
+'Desenvolver uma aplicação web que facilite o processo de recrutamento
+interno para os colaboradores da empresa. A aplicação deve permitir aos
+usuários pesquisar e candidatar-se a vagas internas, passando por filtros
+de requisitos específicos.'
 
-desenvolvido fluxo de cadastro
+**techs**
 
-tanto como Admin/analista e canditado, se canditar para vaga e aparecer as notificações para os usuarios
+Para o desafio foi utilizando as versões : angular 17, Java 17 e springboot 3.3 e Postgres e Docker
 
-\*\*tabelas
+**_tabelas_**
 
 tb_requisitos
 
@@ -32,17 +35,21 @@ tb_vaga_analista_rh
 
 \*\*
 
-**techs**
-
-Para o desafio foi utilizando as versões : angular 17, Java 17 e springboot 3.3 e Postgres
-
 ===
 
-Subir banco
+**Para rodar a aplicação basta apenas utilizar o docker compose**
 
-basta utilizar o docker compose
+- subira tanto o front-end o backend e banco de dados
 
-cmd: docker-compose-up
+> cmd: docker-compose-up
+
+rodar op banco basta utilizar o docker compose
+
+ps:
+
+Configs:
+
+--- caso precise rodar em outro banco
 
 docker pull postgres
 
@@ -53,7 +60,5 @@ docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=vaga-data1 -v pg
 docker start postgres
 
 version: '3' services: db: image: postgres restart: always volumes: - pgdata:/var/lib/postgresql/data environment: POSTGRES_PASSWORD: sua-senha ports: - 5432:5432 volumes: pgdata:
-
-docker-compose up
 
 ==

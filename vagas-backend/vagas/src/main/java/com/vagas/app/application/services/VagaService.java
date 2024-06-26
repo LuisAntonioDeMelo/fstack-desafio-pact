@@ -44,29 +44,31 @@ public class VagaService {
         vaga.setCodigoVaga("cod_" + UUID.randomUUID().toString().substring(1, 7));
 
         adicionarAnalistaResposavelVaga(vagaRequest, vaga);
-
         var vagaSaved = vagaRepository.save(vaga);
+
         salvarRequisitosDaVaga(vagaRequest, vagaSaved);
         return vagaSaved;
     }
 
-    private void salvarRequisitosDaVaga(VagaRequest vagaRequest, Vaga vagaSaved) {
+    private void salvarRequisitosDaVaga(VagaRequest vagaRequest, Vaga vaga) {
         List<Requisito> requisitos = vagaRequest.getRequisitos().stream()
-                .map(r -> new Requisito(r.getNome(), vagaSaved))
+                .map(r -> new Requisito(r.getNome(), vaga))
                 .collect(Collectors.toList());
         requisitoRepository.saveAll(requisitos);
     }
 
+    @Transactional
     public Vaga editar(VagaRequest vagaRequest) {
-        Vaga vagaDb = vagaRepository.findById(UUID.fromString(vagaRequest.getId())).orElseThrow();
-        Vaga vaga = vagaRequest.toModel();
-        BeanUtils.copyProperties(vaga, vagaDb);
+        Vaga vagaDb = vagaRepository.obterVagaCompleta(UUID.fromString(vagaRequest.getId()));
+        requisitoRepository.deleteAll(vagaDb.getRequisitos());
 
-        adicionarAnalistaResposavelVaga(vagaRequest, vaga);
+        BeanUtils.copyProperties(vagaRequest.toData(vagaDb), vagaDb);
 
-        var vagaSaved = vagaRepository.save(vaga);
-        salvarRequisitosDaVaga(vagaRequest, vagaSaved);
-        return vagaSaved;
+        List<Requisito> requisitosRequest = vagaRequest.getRequisitos();
+        requisitosRequest.forEach(r -> r.setVaga(vagaDb));
+        vagaDb.setRequisitos(requisitosRequest);
+
+        return vagaRepository.save(vagaDb);
     }
 
     private void adicionarAnalistaResposavelVaga(VagaRequest vagaRequest, Vaga vaga) {

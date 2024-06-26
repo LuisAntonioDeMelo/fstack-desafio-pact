@@ -19,4 +19,15 @@ public interface VagaRepository extends JpaRepository<Vaga, UUID> {
              where analist.id = :id
             """)
     Optional<List<Vaga>> obterVagasPorIdAnalista(@Param("id") UUID id);
+
+    @Query("""
+            select v from Vaga v
+             left join fetch v.analistas analist 
+             left join fetch v.requisitos r 
+             left join fetch v.candidatos can 
+             where v.id = :id
+            """)
+    Vaga obterVagaCompleta(@Param("id") UUID id);
+
+
 }
