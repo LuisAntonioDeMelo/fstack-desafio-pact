@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 export const httpInteceptorHandler: HttpInterceptorFn = (request, next) => {
   let router = inject(Router);
@@ -23,10 +24,28 @@ export const httpInteceptorHandler: HttpInterceptorFn = (request, next) => {
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 403 || err.status === 401) {
-          alert('HTTP error: ' + err.status + ' Verifique novamente.');
+          Swal.fire({
+            title: 'Error!',
+            text: 'Insira todos os dados antes de se registrar!',
+            icon: 'error',
+            confirmButtonText: 'ok',
+          });
 
-          console.log('error : token não encontrado');
-          // router.navigate(['/login']);
+          Swal.fire({
+            title: 'HTTP error',
+            text: 'HTTP error: ' + err.status + ' Verifique novamente.',
+            //showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Logout',
+            denyButtonText: `Continuar`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              router.navigate(['/login']);
+              Swal.fire('Logout', 'Você irá deslogar', 'warning');
+            } else if (result.isDenied) {
+              Swal.fire('ok', '', 'info');
+            }
+          });
         } else {
           console.error('HTTP error:', err);
         }

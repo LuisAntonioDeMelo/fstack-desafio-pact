@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { VButtonModule } from '../../../components/custom.module';
 import { query, state } from '@angular/animations';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-vagas-listar',
@@ -47,27 +48,39 @@ export class VagasListarComponent implements OnInit {
 
   dataSource!: MatTableDataSource<Vaga>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  //fix
+  @ViewChild(MatSort) sort!: MatSort;
+
   @Input() vagas: Vaga[] = [];
+
   constructor(private vagaService: VagaService, private router: Router) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Vaga>(this.vagas);
+    this.dataSource.data = this.vagas;
     this.dataSource.paginator = this.paginator;
-
-    this.dataSource.filterPredicate = (data: Vaga, filter: string) => {
-      return data.titulo.toLowerCase().includes(filter.toLowerCase());
-    };
+    this.dataSource.sort = this.sort;
   }
 
   search: string = '';
 
-  onSearch(valor: string) {
-    this.dataSource.filter = valor.trim().toLowerCase();
+  applyFilter(event: Event) {
+    const valorSearch = (event.target as HTMLInputElement).value;
+    if (valorSearch) {
+      let vagasFiltradas = this.vagas.filter(
+        (vaga) =>
+          vaga.titulo.toLowerCase().includes(valorSearch) ||
+          vaga.descricao.toLowerCase().includes(valorSearch)
+      );
+      this.vagas = vagasFiltradas;
+      this.dataSource.data = vagasFiltradas;
+    } else {
+      this.buscarVagas();
+    }
   }
 
-  clearSearch() {
+  clear() {
     this.search = '';
+    this.buscarVagas();
   }
 
   cadastrar() {
@@ -90,6 +103,16 @@ export class VagasListarComponent implements OnInit {
       },
       error: (error) => {
         alert('Erro ao Deletar vaga :' + error.erro);
+      },
+    });
+  }
+
+  private buscarVagas() {
+    const id = localStorage.getItem('id_user_role');
+    this.vagaService.obterVagasPorAnalista(id).subscribe({
+      next: (res) => {
+        this.vagas = res;
+        this.dataSource.data = res;
       },
     });
   }

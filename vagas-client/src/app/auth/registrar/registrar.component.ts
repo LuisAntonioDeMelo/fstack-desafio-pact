@@ -14,6 +14,8 @@ import { LoginService } from '../../services/login.service';
 import { RegistrarService } from '../../services/registrar.service';
 import { Router } from '@angular/router';
 import { Login, DadosUsuario, Token, Usuario } from '../model';
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrar',
@@ -26,13 +28,14 @@ import { Login, DadosUsuario, Token, Usuario } from '../model';
     MatFormFieldModule,
     MatInputModule,
     MatButtonToggleModule,
+    CommonModule,
   ],
   templateUrl: './registrar.component.html',
   styleUrl: './registrar.component.css',
 })
 export class RegistrarComponent {
   firstFormGroup = this._formBuilder.group({
-    email: ['', Validators.required],
+    email: ['', Validators.required, Validators.email],
     senha: ['', Validators.required],
     confirmaSenha: ['', Validators.required],
     role: ['', ''],
@@ -77,12 +80,28 @@ export class RegistrarComponent {
         } as DadosUsuario;
 
         this.registrarDadosUsuario(dadosUsuario);
-      } catch (erro) {
-        alert('erro ao registrar!' + erro);
-        throw erro;
+      } catch (error) {
+        Swal.fire({
+          title: 'Erro!',
+          text: error as string,
+          icon: 'error',
+          confirmButtonText: 'Cool',
+        });
       }
     } else {
-      alert('Preencha os campos antes de se registrar!');
+      Swal.fire({
+        title: 'opa!',
+        text: 'Insira todos os dados antes de se registrar!',
+        icon: 'warning',
+        confirmButtonText: 'Cool',
+      });
+      Object.values(this.firstFormGroup.controls).forEach((control) => {
+        control.markAsTouched();
+      });
+
+      Object.values(this.secondFormGroup.controls).forEach((control) => {
+        control.markAsTouched();
+      });
     }
   }
 

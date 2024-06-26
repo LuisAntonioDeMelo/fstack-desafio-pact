@@ -185,7 +185,7 @@
           <v-button
             [class]="'w-fill mt-3'"
             (navigate)="onSubmit()"
-            [any]="'Cadastrar'"
+            [any]="isEditar ? 'Editar' : 'Cadastrar'"
             type="submit"
           >
           </v-button>
@@ -196,6 +196,6 @@
 </mat-card>
 } @if(loginService.hasPermission('candidato')){
 <mat-card appearance="outlined">
-  <mat-card-content>Simple card</mat-card-content>
+  <mat-card-content>Criar Area de detalhe vaga ...</mat-card-content>
 </mat-card>
 }

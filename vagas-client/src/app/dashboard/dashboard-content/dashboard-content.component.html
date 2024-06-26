@@ -31,12 +31,16 @@
   </main>
 </div>
 } @if(loginService.hasPermission('candidato')){
-<mat-card class="p-2 mat-elevation-z1">
+<mat-card class="p-2 mat-elevation-z1 h-screen">
   <mat-card-title class="p-4 mt-2 text-indigo-500"
     ><strong>Dashboard</strong></mat-card-title
   >
-
-  <div class="grid grid-cols-3 gap-4">
+  <mat-card appearance="outlined" class="m-2 p-4">
+    <span class="p-3 text-sm">
+      Quantidade de processos : {{ candidatos.length }}
+    </span>
+  </mat-card>
+  <div class="grid grid-cols-3 gap-4 p-3">
     <mat-card *ngFor="let ca of candidatos" class="p-4">
       <mat-card-header>
         <mat-card-title class="">

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Login, Token } from '../model';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,12 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        alert(error.error);
+        Swal.fire({
+          title: 'Informe login e senha corretamente!',
+          text: error.error,
+          icon: 'error',
+          confirmButtonText: 'ok',
+        });
       },
     });
   }

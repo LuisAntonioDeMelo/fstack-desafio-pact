@@ -4,10 +4,9 @@ import { Vaga } from '../vaga.model';
 import { CommonModule } from '@angular/common';
 import { VButtonModule } from '../../../components/custom.module';
 import { MatButtonModule } from '@angular/material/button';
-import { UUID } from 'angular2-uuid';
 import { Router } from '@angular/router';
-import { VagaService } from '../../../services/vagas.service';
 import { CandidatoService } from '../../../services/candidato.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vagas-grid',
@@ -34,7 +33,12 @@ export class VagasGridComponent {
 
     this.candidatoService.cadidatarParaVaga(data).subscribe({
       next: (res) => {
-        alert(JSON.stringify(res));
+        Swal.fire({
+          title: 'verifique!',
+          text: res.response,
+          icon: 'warning',
+          confirmButtonText: 'ok',
+        });
       },
       error: (error) => {
         alert(error.message);
