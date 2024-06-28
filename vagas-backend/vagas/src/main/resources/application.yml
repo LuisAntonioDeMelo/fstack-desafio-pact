@@ -26,6 +26,19 @@ api:
   security:
     token:
       secret: vbGbyCB2MDWPM7HNjK4UaRHaeHPSUBSu
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  file:
+    name: ./logs/log-file.log
+
+
 #Host: postgres
 #Port: 5432
 #db: postgres

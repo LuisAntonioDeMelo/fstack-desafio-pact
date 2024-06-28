@@ -33,31 +33,20 @@ public class SecurityConfiguration {
 
     private final SecurityFilter securityFilter;
     private final UserRepository repository;
-    @Bean
-    @Order(1)
-    public SecurityFilterChain configurePublicEndpoints(HttpSecurity http) throws Exception {
-        http.securityMatcher(String.valueOf(OPTIONS),"/openapi/openapi.yml")
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().permitAll() // allow CORS option calls for Swagger UI
-                );
-        return http.build();
-    }
-
 
     @Bean
-    @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .securityMatcher(String.valueOf(OPTIONS),"/openapi/openapi.yml")
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/vagas/listar").permitAll()
                         .anyRequest()
                         .authenticated()
                 )
-
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
